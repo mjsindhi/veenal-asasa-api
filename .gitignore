@@ -1,0 +1,18 @@
+HELP.md
+target/
+/*.java
+
+### Mavnen ###
+.mvn/
+mvnw.cmd
+
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+nb-configuration.xml
+/*.properties
