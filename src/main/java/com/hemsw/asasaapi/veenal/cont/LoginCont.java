@@ -6,7 +6,7 @@ import com.hemsw.asasaapi.veenal.dto.res.LoginResDto;
 import com.hemsw.asasaapi.veenal.model.app.AccessTokenModel;
 import com.hemsw.asasaapi.veenal.model.app.UserModel;
 import com.hemsw.asasaapi.veenal.repo.app.UserRepo;
-import com.hemsw.asasaapi.veenal.service.LoginSer;
+import com.hemsw.asasaapi.veenal.service.gen.LoginSer;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

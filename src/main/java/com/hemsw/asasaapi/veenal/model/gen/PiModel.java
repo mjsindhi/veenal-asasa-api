@@ -105,7 +105,6 @@ public class PiModel
 
 	public PiModel(EstimateModel estimateModel)
 	{
-		this.id = estimateModel.getId();
 		this.customerId = estimateModel.getCustomerId();
 		this.isIntra = estimateModel.isIsIntra();
 		this.sumQty = estimateModel.getSumQty();

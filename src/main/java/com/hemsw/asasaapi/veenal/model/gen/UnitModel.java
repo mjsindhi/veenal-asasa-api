@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Getter;
@@ -47,6 +48,7 @@ public class UnitModel
 	@Column(name = "created_by_user_id")
 	private int createdByUserId;
 
+	@Transient
 	@Column(name = "created_at")
 	private Date createdAt;
 

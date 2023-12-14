@@ -123,7 +123,7 @@ public enum KbShortcutEnum
 	PRODUCT_ADD(119, "product_add"),
 	PROD_OTH_CHARGE(120, "prod_oth_charge"),
 	PROD_OTH_CHARGE_ADD(121, "prod_oth_charge_add"),
-	TAX_CAT(122, "tax_cat"),
+	TAX_CAT(122, "tax_category"),
 	TAX_CAT_ADD(123, "tax_cat_add"),
 	PROD_CAT(124, "prod_cat"),
 	PROD_CAT_ADD(125, "prod_cat_add"),

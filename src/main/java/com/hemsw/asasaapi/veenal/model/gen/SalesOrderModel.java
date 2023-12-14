@@ -95,7 +95,6 @@ public class SalesOrderModel
 		this.amtPayable = estimateModel.getAmtPayable();
 		this.note = estimateModel.getNote();
 		this.companyProfileId = estimateModel.getCompanyProfileId();
-		this.estimateId = estimateModel.getId();
 	}
 
 	public SalesOrderModel(PiModel piModel)

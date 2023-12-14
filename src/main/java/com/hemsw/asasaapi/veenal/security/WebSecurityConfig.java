@@ -98,8 +98,14 @@ public class WebSecurityConfig
 				"http://127.0.0.1:3000/",
 				"http://localhost:3000",
 				"http://localhost:3000/",
-				"http://veenal.asasa.hemsw.com//",
-				"https://veenal.asasa.hemsw.com//",
+				"http://veenal.asasa.hemsw.com",
+				"http://veenal.asasa.hemsw.com/",
+				"https://veenal.asasa.hemsw.com",
+				"https://veenal.asasa.hemsw.com/",
+				"http://test.veenal.asasa.hemsw.com",
+				"http://test.veenal.asasa.hemsw.com/",
+				"https://test.veenal.asasa.hemsw.com",
+				"https://test.veenal.asasa.hemsw.com/",
 				"*"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD", "CONNECT", "TRACE"));
 		configuration.setAllowedHeaders(Arrays.asList(

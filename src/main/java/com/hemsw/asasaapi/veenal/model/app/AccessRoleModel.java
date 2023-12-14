@@ -32,4 +32,5 @@ public class AccessRoleModel
 
 	@Column(name = "deleteable")
 	private boolean deleteable;
+
 }

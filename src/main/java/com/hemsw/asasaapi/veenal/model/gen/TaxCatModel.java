@@ -1,15 +1,17 @@
 package com.hemsw.asasaapi.veenal.model.gen;
 
+import com.hemsw.asasaapi.veenal.TableName;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.util.Date;
 
 @Entity
-@Table(name = "tax_cat")
+@Table(name = TableName.TAX_CAT)
 public class TaxCatModel
 {
 
@@ -30,6 +32,7 @@ public class TaxCatModel
 	@Column(name = "created_by_user_id")
 	private int createdByUserId;
 
+	@Transient
 	@Column(name = "created_at")
 	private Date createdAt;
 

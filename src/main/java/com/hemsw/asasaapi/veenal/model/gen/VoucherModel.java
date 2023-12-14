@@ -9,7 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -49,6 +49,22 @@ public class VoucherModel
 
 	public VoucherModel()
 	{
+	}
+
+	public VoucherModel(VoucherModel voucherModel, boolean isCopyId)
+	{
+		if (isCopyId)
+		{
+			this.id = voucherModel.id;
+		}
+		this.date = voucherModel.date;
+		this.no = voucherModel.no;
+		this.parentId = voucherModel.parentId;
+		this.parentId2 = voucherModel.parentId2;
+		this.voucherTypeId = voucherModel.voucherTypeId;
+		this.acctId = voucherModel.acctId;
+		this.createdByUserId = voucherModel.createdByUserId;
+		this.createdAt = voucherModel.createdAt;
 	}
 
 	public int getId()

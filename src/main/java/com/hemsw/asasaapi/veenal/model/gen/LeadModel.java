@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.util.Date;
 
 @Entity
@@ -63,6 +64,7 @@ public class LeadModel
 	@Column(name = "created_by_user_id")
 	private Integer createdByUserId;
 
+	@Transient
 	@Column(name = "created_at")
 	private Date createdAt;
 

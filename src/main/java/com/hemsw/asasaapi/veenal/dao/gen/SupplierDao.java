@@ -4,6 +4,7 @@ import com.hemsw.asasaapi.veenal.SqlHelper;
 import com.hemsw.asasaapi.veenal.TableName;
 import com.hemsw.asasaapi.veenal.dto.ldto.SupplierLdto;
 import com.hemsw.asasaapi.veenal.enums.AccountType;
+import com.hemsw.asasaapi.veenal.helper.DaoHelper;
 import com.hemsw.asasaapi.veenal.model.gen.SupplierModel;
 import com.hemsw.asasaapi.veenal.util.Util;
 import jakarta.persistence.EntityManager;
@@ -162,5 +163,21 @@ public class SupplierDao
 				.getResultList();
 
 		return supplierLdtos;
+	}
+
+	public void delete(int id)
+	{
+		session.createNativeQuery(String.format(DaoHelper.DELETE_BY_ID_SQL, TableName.SUPPLIER, id)).executeUpdate();
+	}
+
+	public void delete(SupplierModel supplierModel)
+	{
+		session.remove(supplierModel);
+	}
+
+	public void deleteAll()
+	{
+		String sql = String.format("DELETE FROM %s", TableName.SUPPLIER);
+		session.createNativeQuery(sql).executeUpdate();
 	}
 }

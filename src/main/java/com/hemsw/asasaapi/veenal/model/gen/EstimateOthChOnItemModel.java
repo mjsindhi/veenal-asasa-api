@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 
@@ -22,8 +24,9 @@ public class EstimateOthChOnItemModel
 	@Column(name = "no")
 	private int no;
 
-	@Column(name = "estimate_id")
-	int estimateId;
+	@ManyToOne
+	@JoinColumn(name = "estimate_id", referencedColumnName = "id")
+	private EstimateModel estimateModel;
 
 	@Column(name = "oth_charge_id")
 	private int othChargeId;
@@ -39,15 +42,6 @@ public class EstimateOthChOnItemModel
 
 	public EstimateOthChOnItemModel()
 	{
-	}
-
-	public EstimateOthChOnItemModel(PiOthChOnItemModel piOthChOnItemModel)
-	{
-		this.no = piOthChOnItemModel.getNo();
-		this.othChargeId = piOthChOnItemModel.getOthChargeId();
-		this.rate = piOthChOnItemModel.getRate();
-		this.rateTypeId = piOthChOnItemModel.getRateTypeId();
-		this.amt = piOthChOnItemModel.getAmt();
 	}
 
 	public int getId()
@@ -70,14 +64,14 @@ public class EstimateOthChOnItemModel
 		this.no = no;
 	}
 
-	public int getEstimateId()
+	public EstimateModel getEstimateModel()
 	{
-		return estimateId;
+		return estimateModel;
 	}
 
-	public void setEstimateId(int estimateId)
+	public void setEstimateModel(EstimateModel estimateModel)
 	{
-		this.estimateId = estimateId;
+		this.estimateModel = estimateModel;
 	}
 
 	public int getOthChargeId()
@@ -90,6 +84,16 @@ public class EstimateOthChOnItemModel
 		this.othChargeId = othChargeId;
 	}
 
+	public BigDecimal getRate()
+	{
+		return rate;
+	}
+
+	public void setRate(BigDecimal rate)
+	{
+		this.rate = rate;
+	}
+
 	public int getRateTypeId()
 	{
 		return rateTypeId;
@@ -98,6 +102,16 @@ public class EstimateOthChOnItemModel
 	public void setRateTypeId(int rateTypeId)
 	{
 		this.rateTypeId = rateTypeId;
+	}
+
+	public BigDecimal getAmt()
+	{
+		return amt;
+	}
+
+	public void setAmt(BigDecimal amt)
+	{
+		this.amt = amt;
 	}
 
 	public RateType getRateType()
@@ -115,34 +129,6 @@ public class EstimateOthChOnItemModel
 	public void setRateType(RateType vouItemCalcType)
 	{
 		this.rateTypeId = vouItemCalcType.getId();
-	}
-
-	public BigDecimal getRate()
-	{
-		return rate;
-	}
-
-	public void setRate(BigDecimal rate)
-	{
-		this.rate = rate;
-	}
-
-	public BigDecimal getAmt()
-	{
-		return amt;
-	}
-
-	public void setAmt(BigDecimal amt)
-	{
-		this.amt = amt;
-	}
-
-	//
-	public void load(VouOthChModel othChargeModel)
-	{
-		this.othChargeId = othChargeModel.getId();
-		this.rate = othChargeModel.getRate();
-		this.rateTypeId = othChargeModel.getRateTypeId();
 	}
 
 }

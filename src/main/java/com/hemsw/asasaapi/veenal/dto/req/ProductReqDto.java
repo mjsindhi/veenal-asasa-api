@@ -1,6 +1,7 @@
 package com.hemsw.asasaapi.veenal.dto.req;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import lombok.Getter;
 
 @Getter
@@ -12,17 +13,18 @@ public class ProductReqDto
 	private String desc;
 	private Integer unitId;
 	private Integer hsn;
-	private BigDecimal purchasePriceRaw;
-	private BigDecimal purchasePriceFinished;
+	private BigDecimal rawPurchasePrice;
+	private BigDecimal polishPrice;
 	private BigDecimal costPrice;
 	private BigDecimal additionalCost;
 	private BigDecimal minSalesPrice;
-	private BigDecimal maxSalesPrice;
-	private BigDecimal internetSalesPrice;
+	private BigDecimal wholesaleSalesPrice;
 	private BigDecimal mrp;
+	private BigDecimal internetSalesPrice;
+	private BigDecimal maxSalesPrice;
 	private BigDecimal discount;
-	private Integer productCategoryId;
-	private Integer taxCategoryId;
+	private Integer productCatId;
+	private Integer taxCatId;
 	private Integer taxId;
 	private String note;
 	private boolean isSold;
@@ -30,6 +32,9 @@ public class ProductReqDto
 	private BigDecimal minQty;
 	private BigDecimal reorderQty;
 	private Integer rawSupplierId;
-	private Integer finishedSupplierId;
+	private Integer polishedBySupplierId;
 	private BigDecimal weight;
+	private int createdByUserId;
+	private Date createdAt;
+
 }

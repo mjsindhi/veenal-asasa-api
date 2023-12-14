@@ -35,4 +35,10 @@ public class AccessRolePermModel
 
 	@Column(name = "value")
 	private boolean value;
+
+	public AccessRolePermModel(int permId, boolean value)
+	{
+		this.permId = permId;
+		this.value = value;
+	}
 }

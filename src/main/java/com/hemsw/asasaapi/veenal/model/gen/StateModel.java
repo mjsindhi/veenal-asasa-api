@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.util.Date;
 
 @Entity
@@ -25,17 +26,26 @@ public class StateModel
 	private String codeName;
 
 	@Column(name = "code_no")
-	private String codeNo;
+	private int codeNo;
+
+	@Column(name = "country_id")
+	private int countryId;
 
 	@Column(name = "created_by_user_id")
 	private int createdByUserId;
 
+	@Transient
 	@Column(name = "created_at")
 	private Date createdAt;
 
 	public int getId()
 	{
 		return id;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 
 	public String getName()
@@ -58,14 +68,24 @@ public class StateModel
 		this.codeName = codeName;
 	}
 
-	public String getCodeNo()
+	public int getCodeNo()
 	{
 		return codeNo;
 	}
 
-	public void setCodeNo(String codeNo)
+	public void setCodeNo(int codeNo)
 	{
 		this.codeNo = codeNo;
+	}
+
+	public int getCountryId()
+	{
+		return countryId;
+	}
+
+	public void setCountryId(int countryId)
+	{
+		this.countryId = countryId;
 	}
 
 	public int getCreatedByUserId()

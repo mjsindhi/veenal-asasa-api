@@ -1,6 +1,5 @@
 package com.hemsw.asasaapi.veenal.model.gen;
 
-import com.hemsw.asasaapi.veenal.enums.PriceListType;
 import com.hemsw.asasaapi.veenal.enums.RateType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,12 +39,6 @@ public class SalesOrderItemModel
 
 	@Column(name = "qty")
 	private BigDecimal qty;
-
-	@Column(name = "price_list_type_id")
-	private Integer priceListTypeId;
-
-	@Column(name = "price_list_rate")
-	private BigDecimal priceListRate;
 
 	@Column(name = "rate")
 	private BigDecimal rate;
@@ -97,8 +90,6 @@ public class SalesOrderItemModel
 		this.orderQty = estimateItemModel.getQty();
 		this.orderUnitId = unitId;
 		this.qty = estimateItemModel.getQty();
-		this.priceListTypeId = estimateItemModel.getPriceListTypeId();
-		this.priceListRate = estimateItemModel.getPriceListRate();
 		this.rate = estimateItemModel.getRate();
 		this.qxr = estimateItemModel.getQxr();
 		this.discRate = estimateItemModel.getDiscRate();
@@ -121,8 +112,6 @@ public class SalesOrderItemModel
 		this.orderQty = piItemModel.getQty();
 		this.orderUnitId = unitId;
 		this.qty = piItemModel.getQty();
-		this.priceListTypeId = piItemModel.getPriceListTypeId();
-		this.priceListRate = piItemModel.getPriceListRate();
 		this.rate = piItemModel.getRate();
 		this.qxr = piItemModel.getQxr();
 		this.discRate = piItemModel.getDiscRate();
@@ -148,8 +137,6 @@ public class SalesOrderItemModel
 		this.orderQty = salesOrderItemModel.orderQty;
 		this.orderUnitId = salesOrderItemModel.orderUnitId;
 		this.qty = salesOrderItemModel.qty;
-		this.priceListTypeId = salesOrderItemModel.priceListTypeId;
-		this.priceListRate = salesOrderItemModel.priceListRate;
 		this.rate = salesOrderItemModel.rate;
 		this.qxr = salesOrderItemModel.qxr;
 		this.discRate = salesOrderItemModel.discRate;
@@ -243,26 +230,6 @@ public class SalesOrderItemModel
 	public void setQty(BigDecimal qty)
 	{
 		this.qty = qty;
-	}
-
-	public Integer getPriceListTypeId()
-	{
-		return priceListTypeId;
-	}
-
-	public void setPriceListTypeId(Integer priceListTypeId)
-	{
-		this.priceListTypeId = priceListTypeId;
-	}
-
-	public BigDecimal getPriceListRate()
-	{
-		return priceListRate;
-	}
-
-	public void setPriceListRate(BigDecimal priceListRate)
-	{
-		this.priceListRate = priceListRate;
 	}
 
 	public BigDecimal getRate()
@@ -422,28 +389,6 @@ public class SalesOrderItemModel
 		else
 		{
 			this.discRateTypeId = vouItemRateType.getId();
-		}
-	}
-
-	public PriceListType getPriceListType()
-	{
-		if (priceListTypeId == null)
-		{
-			return null;
-		}
-
-		return PriceListType.getById(priceListTypeId);
-	}
-
-	public void setPriceListType(PriceListType priceListType)
-	{
-		if (priceListType == null)
-		{
-			this.priceListTypeId = null;
-		}
-		else
-		{
-			this.priceListTypeId = priceListType.getId();
 		}
 	}
 

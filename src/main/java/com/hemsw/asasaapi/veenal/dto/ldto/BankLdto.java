@@ -2,12 +2,18 @@ package com.hemsw.asasaapi.veenal.dto.ldto;
 
 import com.hemsw.asasaapi.veenal.enums.BalanceType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
+import org.springframework.data.annotation.Immutable;
 
+@Entity
+@Immutable
 public class BankLdto
 {
 
+	@Id
 	@Column(name = "id")
 	private int id;
 

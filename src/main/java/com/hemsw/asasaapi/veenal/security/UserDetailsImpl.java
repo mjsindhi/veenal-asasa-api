@@ -1,5 +1,6 @@
 package com.hemsw.asasaapi.veenal.security;
 
+import com.hemsw.asasaapi.veenal.dto.hdto.AccessRolePermHdto;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -15,6 +16,8 @@ public class UserDetailsImpl implements UserDetails
 	private static final long serialVersionUID = 1L;
 
 	private UserModel userModel;
+
+	private AccessRolePermHdto accessRolePermHdto;
 
 //	@JsonIgnore
 //	private String password;
@@ -95,6 +98,11 @@ public class UserDetailsImpl implements UserDetails
 	public boolean isEnabled()
 	{
 		return true;
+	}
+
+	public AccessRolePermHdto getAccessRolePermHdto()
+	{
+		return accessRolePermHdto;
 	}
 
 	@Override

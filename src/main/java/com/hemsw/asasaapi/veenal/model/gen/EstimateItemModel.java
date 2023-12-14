@@ -1,15 +1,15 @@
 package com.hemsw.asasaapi.veenal.model.gen;
 
-import com.hemsw.asasaapi.veenal.enums.PriceListType;
 import com.hemsw.asasaapi.veenal.enums.RateType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
-import java.util.Objects;
 
 @Entity
 @Table(name = "estimate_item")
@@ -24,32 +24,18 @@ public class EstimateItemModel
 	@Column(name = "seq_no")
 	private int seqNo;
 
-	@Column(name = "estimate_id")
-	private int estimateId;
+	@ManyToOne
+	@JoinColumn(name = "estimate_id", referencedColumnName = "id")
+	private EstimateModel estimateModel;
 
 	@Column(name = "product_id")
 	private int productId;
 
-	@Column(name = "desc")
+	@Column(name = "`desc`")
 	private String desc;
-
-	@Column(name = "order_qty")
-	private BigDecimal orderQty;
-
-	@Column(name = "order_unit_id")
-	private int orderUnitId;
-
-	@Column(name = "is_pending")
-	private boolean isPending;
 
 	@Column(name = "qty")
 	private BigDecimal qty;
-
-	@Column(name = "price_list_type_id")
-	private Integer priceListTypeId;
-
-	@Column(name = "price_list_rate")
-	private BigDecimal priceListRate;
 
 	@Column(name = "rate")
 	private BigDecimal rate;
@@ -94,34 +80,6 @@ public class EstimateItemModel
 	{
 	}
 
-	public EstimateItemModel(EstimateItemModel estimateItemModel)
-	{
-		this.id = estimateItemModel.id;
-		this.seqNo = estimateItemModel.seqNo;
-		this.estimateId = estimateItemModel.estimateId;
-		this.productId = estimateItemModel.productId;
-		this.desc = estimateItemModel.desc;
-		this.orderQty = estimateItemModel.orderQty;
-		this.orderUnitId = estimateItemModel.orderUnitId;
-		this.isPending = estimateItemModel.isPending;
-		this.qty = estimateItemModel.qty;
-		this.priceListTypeId = estimateItemModel.priceListTypeId;
-		this.priceListRate = estimateItemModel.priceListRate;
-		this.rate = estimateItemModel.rate;
-		this.qxr = estimateItemModel.qxr;
-		this.discRate = estimateItemModel.discRate;
-		this.discRateTypeId = estimateItemModel.discRateTypeId;
-		this.discA = estimateItemModel.discA;
-		this.amtAfterDisc = estimateItemModel.amtAfterDisc;
-		this.taxableAmt = estimateItemModel.taxableAmt;
-		this.taxId = estimateItemModel.taxId;
-		this.taxRate = estimateItemModel.taxRate;
-		this.cgstA = estimateItemModel.cgstA;
-		this.sgstA = estimateItemModel.sgstA;
-		this.igstA = estimateItemModel.igstA;
-		this.amt = estimateItemModel.amt;
-	}
-
 	public int getId()
 	{
 		return id;
@@ -142,14 +100,14 @@ public class EstimateItemModel
 		this.seqNo = seqNo;
 	}
 
-	public int getEstimateId()
+	public EstimateModel getEstimateModel()
 	{
-		return estimateId;
+		return estimateModel;
 	}
 
-	public void setEstimateId(int estimateId)
+	public void setEstimateModel(EstimateModel estimateModel)
 	{
-		this.estimateId = estimateId;
+		this.estimateModel = estimateModel;
 	}
 
 	public int getProductId()
@@ -172,36 +130,6 @@ public class EstimateItemModel
 		this.desc = desc;
 	}
 
-	public BigDecimal getOrderQty()
-	{
-		return orderQty;
-	}
-
-	public void setOrderQty(BigDecimal orderQty)
-	{
-		this.orderQty = orderQty;
-	}
-
-	public int getOrderUnitId()
-	{
-		return orderUnitId;
-	}
-
-	public void setOrderUnitId(int orderUnitId)
-	{
-		this.orderUnitId = orderUnitId;
-	}
-
-	public boolean isIsPending()
-	{
-		return isPending;
-	}
-
-	public void setIsPending(boolean isPending)
-	{
-		this.isPending = isPending;
-	}
-
 	public BigDecimal getQty()
 	{
 		return qty;
@@ -210,26 +138,6 @@ public class EstimateItemModel
 	public void setQty(BigDecimal qty)
 	{
 		this.qty = qty;
-	}
-
-	public Integer getPriceListTypeId()
-	{
-		return priceListTypeId;
-	}
-
-	public void setPriceListTypeId(Integer priceListTypeId)
-	{
-		this.priceListTypeId = priceListTypeId;
-	}
-
-	public BigDecimal getPriceListRate()
-	{
-		return priceListRate;
-	}
-
-	public void setPriceListRate(BigDecimal priceListRate)
-	{
-		this.priceListRate = priceListRate;
 	}
 
 	public BigDecimal getRate()
@@ -390,68 +298,6 @@ public class EstimateItemModel
 		{
 			this.discRateTypeId = vouItemRateType.getId();
 		}
-	}
-
-	public PriceListType getPriceListType()
-	{
-		if (priceListTypeId == null)
-		{
-			return null;
-		}
-
-		return PriceListType.getById(priceListTypeId);
-	}
-
-	public void setPriceListType(PriceListType priceListType)
-	{
-		if (priceListType == null)
-		{
-			this.priceListTypeId = null;
-		}
-		else
-		{
-			this.priceListTypeId = priceListType.getId();
-		}
-	}
-
-	public int hashCode()
-	{
-		int hash = 7;
-		hash = 43 * hash + this.id;
-		hash = 43 * hash + this.seqNo;
-		hash = 43 * hash + this.estimateId;
-		hash = 43 * hash + this.productId;
-		hash = 43 * hash + Objects.hashCode(this.desc);
-		hash = 43 * hash + Objects.hashCode(this.orderQty);
-		hash = 43 * hash + this.orderUnitId;
-		hash = 43 * hash + (this.isPending ? 1 : 0);
-		hash = 43 * hash + Objects.hashCode(this.qty);
-		hash = 43 * hash + Objects.hashCode(this.priceListTypeId);
-		hash = 43 * hash + Objects.hashCode(this.priceListRate);
-		hash = 43 * hash + Objects.hashCode(this.rate);
-		hash = 43 * hash + Objects.hashCode(this.qxr);
-		hash = 43 * hash + Objects.hashCode(this.discRate);
-		hash = 43 * hash + Objects.hashCode(this.discRateTypeId);
-		hash = 43 * hash + Objects.hashCode(this.discA);
-		hash = 43 * hash + Objects.hashCode(this.amtAfterDisc);
-		hash = 43 * hash + Objects.hashCode(this.taxableAmt);
-		hash = 43 * hash + Objects.hashCode(this.taxId);
-		hash = 43 * hash + Objects.hashCode(this.taxRate);
-		hash = 43 * hash + Objects.hashCode(this.cgstA);
-		hash = 43 * hash + Objects.hashCode(this.sgstA);
-		hash = 43 * hash + Objects.hashCode(this.igstA);
-		hash = 43 * hash + Objects.hashCode(this.amt);
-		return hash;
-	}
-
-	public boolean isRateInclAll()
-	{
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	public void setRateInclAll(boolean rateInclAll)
-	{
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
 }

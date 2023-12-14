@@ -15,4 +15,5 @@ mvnw.cmd
 /.nb-gradle/
 build/
 nb-configuration.xml
+/**/env.properties
 /*.properties

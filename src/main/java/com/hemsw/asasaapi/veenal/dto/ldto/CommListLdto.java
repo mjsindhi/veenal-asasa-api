@@ -2,11 +2,17 @@ package com.hemsw.asasaapi.veenal.dto.ldto;
 
 import com.hemsw.asasaapi.veenal.model.gen.CommListModel.CommOnType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import java.util.Date;
+import org.springframework.data.annotation.Immutable;
 
+@Entity
+@Immutable
 public class CommListLdto
 {
 
+	@Id
 	@Column(name = "id")
 	private int id;
 

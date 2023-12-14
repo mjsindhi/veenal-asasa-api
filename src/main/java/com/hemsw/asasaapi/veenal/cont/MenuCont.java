@@ -1,7 +1,7 @@
 package com.hemsw.asasaapi.veenal.cont;
 
 import com.hemsw.asasaapi.veenal.dto.res.CommonGetOneResDto;
-import com.hemsw.asasaapi.veenal.service.MenuSer;
+import com.hemsw.asasaapi.veenal.service.gen.MenuSer;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class MenuCont
 	MenuSer menuSer;
 
 	@GetMapping("/menus")
-	public ResponseEntity index()
+	public ResponseEntity getMenus()
 	{
 		CommonGetOneResDto commonGetOneResDto = menuSer.get();
 

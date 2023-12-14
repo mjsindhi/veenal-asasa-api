@@ -37,7 +37,7 @@ public enum MenuEnum
 	SERVICE("service", "Service"),
 	PROD("prod", "Product"),
 	PROD_OTH_CH("prod_oth_ch", "Product Other Charge"),
-	TAX_CAT("tax_cat", "Tax Category"),
+	TAX_CAT("tax_category", "Tax Category"),
 	CAT("cat", "Category"),
 	UNIT("unit", "Unit"),
 	RPT_SALES_RETURN_BY_MONTH("rpt_sales_return_by_month", "By Month"),

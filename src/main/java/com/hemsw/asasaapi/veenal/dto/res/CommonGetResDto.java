@@ -1,6 +1,5 @@
 package com.hemsw.asasaapi.veenal.dto.res;
 
-import com.hemsw.asasaapi.veenal.util.ExceptionUtil;
 import java.util.Date;
 import java.util.List;
 import lombok.ToString;
@@ -43,7 +42,13 @@ public class CommonGetResDto<T>
 		this.isSuccess = false;
 		this.hasException = true;
 		this.rows = null;
-		this.errorResDto = new ErrorResDto(new Date(), "internal_server_error", ExceptionUtil.getString(ex), ExceptionUtil.getString(ex));
+		//this.errorResDto = new ErrorResDto(new Date(), "internal_server_error", ExceptionUtil.getString(ex), ExceptionUtil.getString(ex));
+		this.errorResDto = new ErrorResDto(
+				new Date(),
+				"internal_server_error",
+				"Internal server error occured",
+				"Internal server error occured"
+		);
 	}
 
 	public CommonGetResDto(Exception... exceptions)
@@ -51,6 +56,8 @@ public class CommonGetResDto<T>
 		this.isSuccess = false;
 		this.hasException = true;
 		this.rows = null;
+
+		/*
 		this.errorResDto = new ErrorResDto();
 		this.errorResDto.setTimestamp(new Date());
 		this.errorResDto.setCode("internal_server_error");
@@ -59,6 +66,13 @@ public class CommonGetResDto<T>
 			this.errorResDto.setDetails(this.errorResDto + "\n" + ExceptionUtil.getString(exception));
 		}
 		this.errorResDto.setMessage(this.errorResDto.getDetails());
+		 */
+		this.errorResDto = new ErrorResDto(
+				new Date(),
+				"internal_server_error",
+				"Internal server error occured",
+				"Internal server error occured"
+		);
 	}
 
 	public CommonGetResDto(boolean isSuccess, boolean hasException, List<T> rows, ErrorResDto errorResDto)

@@ -2,12 +2,11 @@ package com.hemsw.asasaapi.veenal.model.gen;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
-import java.util.Objects;
 
 @Entity
 @Table(name = "estimate")
@@ -15,9 +14,9 @@ public class EstimateModel
 {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
+	@OneToOne
+	@JoinColumn(name = "id", referencedColumnName = "id")
+	private VoucherModel voucherModel;
 
 	@Column(name = "customer_id")
 	private Integer customerId;
@@ -76,71 +75,40 @@ public class EstimateModel
 	@Column(name = "status_id")
 	private Integer statusId;
 
+	@Column(name = "payment_mode_id")
+	private Integer paymentModeId;
+
+	@Column(name = "payment_term_id")
+	private Integer paymentTermId;
+
+	@Column(name = "sales_channel_id")
+	private Integer salesChannelId;
+
+	@Column(name = "trade_term_id")
+	private Integer tradeTermId;
+
+	@Column(name = "currency_id")
+	private Integer currencyId;
+
+	@Column(name = "currency_conversion_rate")
+	private BigDecimal currencyConversionRate;
+
 	@Column(name = "lock_stock_for_days")
-	private Integer lockStatusForDays;
-
-	public EstimateModel(PiModel piModel)
-	{
-		this.customerId = piModel.getCustomerId();
-		this.isIntra = piModel.isIsIntra();
-		this.sumQty = piModel.getSumQty();
-		this.sumQxr = piModel.getSumQxr();
-		this.sumAmtAfterItemDisc = piModel.getSumAmtAfterItemDisc();
-		this.sumItemTaxableAmt = piModel.getSumItemTaxableAmt();
-		this.isTax = piModel.isIsTax();
-		this.cgstA = piModel.getCgstA();
-		this.sgstA = piModel.getSgstA();
-		this.igstA = piModel.getIgstA();
-		this.sumAmtAfterTax = piModel.getSumAmtAfterTax();
-		this.totalAmt = piModel.getTotalAmt();
-		this.roundOff = piModel.getRoundOff();
-		this.amtPayable = piModel.getAmtPayable();
-		this.note = piModel.getNote();
-		this.companyProfileId = piModel.getCompanyProfileId();
-
-	}
-
-	public EstimateModel(EstimateModel estimateModel, boolean copyId)
-	{
-		if (copyId)
-		{
-			this.id = estimateModel.id;
-		}
-
-		this.customerId = estimateModel.customerId;
-		this.isIntra = estimateModel.isIntra;
-		this.transporterId = estimateModel.transporterId;
-		this.sumQty = estimateModel.sumQty;
-		this.sumQxr = estimateModel.sumQxr;
-		this.sumAmtAfterItemDisc = estimateModel.sumAmtAfterItemDisc;
-		this.sumItemTaxableAmt = estimateModel.sumItemTaxableAmt;
-		this.isTax = estimateModel.isTax;
-		this.cgstA = estimateModel.cgstA;
-		this.sgstA = estimateModel.sgstA;
-		this.igstA = estimateModel.igstA;
-		this.sumAmtAfterTax = estimateModel.sumAmtAfterTax;
-		this.totalAmt = estimateModel.totalAmt;
-		this.roundOff = estimateModel.roundOff;
-		this.amtPayable = estimateModel.amtPayable;
-		this.note = estimateModel.note;
-		this.companyProfileId = estimateModel.companyProfileId;
-		this.statusId = estimateModel.statusId;
-		this.lockStatusForDays = estimateModel.lockStatusForDays;
-	}
+	private Integer lockStockForDays;
 
 	public EstimateModel()
 	{
 		note = "";
 	}
 
-	public int getId()
+	public VoucherModel getVoucherModel()
 	{
-		return id;
+		return voucherModel;
 	}
 
-	public void setId(int id)
+	public void setVoucherModel(VoucherModel voucherModel)
 	{
-		this.id = id;
+		this.voucherModel = voucherModel;
 	}
 
 	public Integer getCustomerId()
@@ -323,150 +291,74 @@ public class EstimateModel
 		this.statusId = statusId;
 	}
 
-	public Integer getLockStatusForDays()
+	public Integer getPaymentModeId()
 	{
-		return lockStatusForDays;
+		return paymentModeId;
 	}
 
-	public void setLockStatusForDays(Integer lockStatusForDays)
+	public void setPaymentModeId(Integer paymentModeId)
 	{
-		this.lockStatusForDays = lockStatusForDays;
+		this.paymentModeId = paymentModeId;
 	}
 
-	//
-	public int getSucuId()
+	public Integer getPaymentTermId()
 	{
-		return customerId;
+		return paymentTermId;
 	}
 
-	public void setSucuId(int sucuId)
+	public void setPaymentTermId(Integer paymentTermId)
 	{
-		this.customerId = sucuId;
+		this.paymentTermId = paymentTermId;
 	}
 
-	//
-	public int hashCode()
+	public Integer getSalesChannelId()
 	{
-		int hash = 3;
-		hash = 89 * hash + this.id;
-		hash = 89 * hash + Objects.hashCode(this.customerId);
-		hash = 89 * hash + (this.isIntra ? 1 : 0);
-		hash = 89 * hash + Objects.hashCode(this.transporterId);
-		hash = 89 * hash + Objects.hashCode(this.sumQty);
-		hash = 89 * hash + Objects.hashCode(this.sumQxr);
-		hash = 89 * hash + Objects.hashCode(this.sumAmtAfterItemDisc);
-		hash = 89 * hash + Objects.hashCode(this.sumItemTaxableAmt);
-		hash = 89 * hash + (this.isTax ? 1 : 0);
-		hash = 89 * hash + Objects.hashCode(this.cgstA);
-		hash = 89 * hash + Objects.hashCode(this.sgstA);
-		hash = 89 * hash + Objects.hashCode(this.igstA);
-		hash = 89 * hash + Objects.hashCode(this.sumAmtAfterTax);
-		hash = 89 * hash + Objects.hashCode(this.totalAmt);
-		hash = 89 * hash + Objects.hashCode(this.roundOff);
-		hash = 89 * hash + Objects.hashCode(this.amtPayable);
-		hash = 89 * hash + Objects.hashCode(this.note);
-		hash = 89 * hash + Objects.hashCode(this.companyProfileId);
-		hash = 89 * hash + Objects.hashCode(this.statusId);
-		hash = 89 * hash + Objects.hashCode(this.lockStatusForDays);
-		return hash;
+		return salesChannelId;
 	}
 
-	public boolean equals(Object obj)
+	public void setSalesChannelId(Integer salesChannelId)
 	{
-		if (this == obj)
-		{
-			return true;
-		}
-		if (obj == null)
-		{
-			return false;
-		}
-		if (getClass() != obj.getClass())
-		{
-			return false;
-		}
-		final EstimateModel other = (EstimateModel) obj;
-		if (this.id != other.id)
-		{
-			return false;
-		}
-		if (this.isIntra != other.isIntra)
-		{
-			return false;
-		}
-		if (!Objects.equals(this.transporterId, other.transporterId))
-		{
-			return false;
-		}
-		if (this.isTax != other.isTax)
-		{
-			return false;
-		}
-		if (!Objects.equals(this.note, other.note))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.customerId, other.customerId))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.sumQty, other.sumQty))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.sumQxr, other.sumQxr))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.sumAmtAfterItemDisc, other.sumAmtAfterItemDisc))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.sumItemTaxableAmt, other.sumItemTaxableAmt))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.cgstA, other.cgstA))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.sgstA, other.sgstA))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.igstA, other.igstA))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.sumAmtAfterTax, other.sumAmtAfterTax))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.totalAmt, other.totalAmt))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.roundOff, other.roundOff))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.amtPayable, other.amtPayable))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.companyProfileId, other.companyProfileId))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.statusId, other.statusId))
-		{
-			return false;
-		}
-		if (!Objects.equals(this.lockStatusForDays, other.lockStatusForDays))
-		{
-			return false;
-		}
-		return true;
+		this.salesChannelId = salesChannelId;
+	}
+
+	public Integer getTradeTermId()
+	{
+		return tradeTermId;
+	}
+
+	public void setTradeTermId(Integer tradeTermId)
+	{
+		this.tradeTermId = tradeTermId;
+	}
+
+	public Integer getCurrencyId()
+	{
+		return currencyId;
+	}
+
+	public void setCurrencyId(Integer currencyId)
+	{
+		this.currencyId = currencyId;
+	}
+
+	public BigDecimal getCurrencyConversionRate()
+	{
+		return currencyConversionRate;
+	}
+
+	public void setCurrencyConversionRate(BigDecimal currencyConversionRate)
+	{
+		this.currencyConversionRate = currencyConversionRate;
+	}
+
+	public Integer getLockStockForDays()
+	{
+		return lockStockForDays;
+	}
+
+	public void setLockStockForDays(Integer lockStockForDays)
+	{
+		this.lockStockForDays = lockStockForDays;
 	}
 
 }

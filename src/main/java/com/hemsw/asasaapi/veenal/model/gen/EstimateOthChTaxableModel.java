@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 
@@ -22,8 +24,9 @@ public class EstimateOthChTaxableModel
 	@Column(name = "no")
 	private int no;
 
-	@Column(name = "estimate_id")
-	int estimateId;
+	@ManyToOne
+	@JoinColumn(name = "estimate_id", referencedColumnName = "id")
+	private EstimateModel estimateModel;
 
 	@Column(name = "oth_charge_id")
 	private int othChargeId;
@@ -56,20 +59,6 @@ public class EstimateOthChTaxableModel
 	{
 	}
 
-	public EstimateOthChTaxableModel(PiOthChTaxableModel piOthChTaxableModel)
-	{
-		this.no = piOthChTaxableModel.getNo();
-		this.othChargeId = piOthChTaxableModel.getOthChargeId();
-		this.rate = piOthChTaxableModel.getRate();
-		this.rateTypeId = piOthChTaxableModel.getRateTypeId();
-		this.taxableAmt = piOthChTaxableModel.getTaxableAmt();
-		this.taxId = piOthChTaxableModel.getTaxId();
-		this.cgstA = piOthChTaxableModel.getCgstA();
-		this.sgstA = piOthChTaxableModel.getSgstA();
-		this.igstA = piOthChTaxableModel.getIgstA();
-		this.amt = piOthChTaxableModel.getAmt();
-	}
-
 	public int getId()
 	{
 		return id;
@@ -90,14 +79,14 @@ public class EstimateOthChTaxableModel
 		this.no = no;
 	}
 
-	public int getEstimateId()
+	public EstimateModel getEstimateModel()
 	{
-		return estimateId;
+		return estimateModel;
 	}
 
-	public void setEstimateId(int estimateId)
+	public void setEstimateModel(EstimateModel estimateModel)
 	{
-		this.estimateId = estimateId;
+		this.estimateModel = estimateModel;
 	}
 
 	public int getOthChargeId()
@@ -110,33 +99,6 @@ public class EstimateOthChTaxableModel
 		this.othChargeId = othChargeId;
 	}
 
-	public int getRateTypeId()
-	{
-		return rateTypeId;
-	}
-
-	public void setRateTypeId(int rateTypeId)
-	{
-		this.rateTypeId = rateTypeId;
-	}
-
-	public RateType getRateType()
-	{
-		for (RateType value1 : RateType.values())
-		{
-			if (value1.getId() == rateTypeId)
-			{
-				return value1;
-			}
-		}
-		return null;
-	}
-
-	public void setRateType(RateType vouItemCalcType)
-	{
-		this.rateTypeId = vouItemCalcType.getId();
-	}
-
 	public BigDecimal getRate()
 	{
 		return rate;
@@ -145,6 +107,16 @@ public class EstimateOthChTaxableModel
 	public void setRate(BigDecimal rate)
 	{
 		this.rate = rate;
+	}
+
+	public int getRateTypeId()
+	{
+		return rateTypeId;
+	}
+
+	public void setRateTypeId(int rateTypeId)
+	{
+		this.rateTypeId = rateTypeId;
 	}
 
 	public BigDecimal getTaxableAmt()
@@ -205,6 +177,23 @@ public class EstimateOthChTaxableModel
 	public void setAmt(BigDecimal amt)
 	{
 		this.amt = amt;
+	}
+
+	public RateType getRateType()
+	{
+		for (RateType value1 : RateType.values())
+		{
+			if (value1.getId() == rateTypeId)
+			{
+				return value1;
+			}
+		}
+		return null;
+	}
+
+	public void setRateType(RateType vouItemCalcType)
+	{
+		this.rateTypeId = vouItemCalcType.getId();
 	}
 
 }

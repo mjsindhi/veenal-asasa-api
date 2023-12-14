@@ -8,36 +8,38 @@ public class ProductMapper
 
 	public static ProductModel toProductModel(ProductReqDto productReqDto)
 	{
-		ProductModel productModel = new ProductModel()
-				.setName(productReqDto.getName())
-				.setCode(productReqDto.getCode())
-				.setDesc(productReqDto.getDesc())
-				.setUnitId(productReqDto.getUnitId())
-				.setHsn(productReqDto.getHsn())
-				.setPurchasePriceRaw(productReqDto.getPurchasePriceRaw())
-				.setPurchasePriceFinished(productReqDto.getPurchasePriceFinished())
-				.setCostPrice(productReqDto.getCostPrice())
-				.setAdditionalCost(productReqDto.getAdditionalCost())
-				.setMinSalesPrice(productReqDto.getMinSalesPrice())
-				.setMaxSalesPrice(productReqDto.getMaxSalesPrice())
-				.setInternetSalesPrice(productReqDto.getInternetSalesPrice())
-				.setMrp(productReqDto.getMrp())
-				.setDiscount(productReqDto.getDiscount())
-				.setProductCategoryId(productReqDto.getProductCategoryId())
-				.setTaxCategoryId(productReqDto.getTaxCategoryId())
-				.setTaxId(productReqDto.getTaxId());
+		ProductModel productModel = new ProductModel();
+		productModel.setName(productReqDto.getName());
+		productModel.setCode(productReqDto.getCode());
+		productModel.setDesc(productReqDto.getDesc());
+		productModel.setUnitId(productReqDto.getUnitId());
+		productModel.setHsn(productReqDto.getHsn());
+		productModel.setRawPurchasePrice(productReqDto.getRawPurchasePrice());
+		productModel.setPolishPrice(productReqDto.getPolishPrice());
+		productModel.setCostPrice(productReqDto.getCostPrice());
+		productModel.setAdditionalCost(productReqDto.getAdditionalCost());
+		productModel.setMinSalesPrice(productReqDto.getMinSalesPrice());
+		productModel.setWholesaleSalesPrice(productReqDto.getWholesaleSalesPrice());
+		productModel.setMrp(productReqDto.getMrp());
+		productModel.setInternetSalesPrice(productReqDto.getInternetSalesPrice());
+		productModel.setMaxSalesPrice(productReqDto.getMaxSalesPrice());
+		productModel.setDiscount(productReqDto.getDiscount());
+		productModel.setCatId(productReqDto.getProductCatId());
+		productModel.setTaxCatId(productReqDto.getTaxCatId());
+		productModel.setTaxId(productReqDto.getTaxId());
 		String noteStr = "";
 		if (productReqDto.getNote() != null)
 		{
 			noteStr = productReqDto.getNote();
 		}
-		productModel.setNote(noteStr)
-				.setSold(productReqDto.isSold())
-				.setMade(productReqDto.isMade())
-				.setMinQty(productReqDto.getMinQty())
-				.setReorderQty(productReqDto.getReorderQty())
-				.setRawSupplierId(productReqDto.getRawSupplierId())
-				.setFinishedSupplierId(productReqDto.getFinishedSupplierId());
+		productModel.setNote(noteStr);
+		productModel.setIsSold(productReqDto.isSold());
+		productModel.setIsMade(productReqDto.isMade());
+		productModel.setMinQty(productReqDto.getMinQty());
+		productModel.setReorderQty(productReqDto.getReorderQty());
+		productModel.setRawSupplierId(productReqDto.getRawSupplierId());
+		productModel.setPolishedBySupplierId(productReqDto.getPolishedBySupplierId());
+		productModel.setWeight(productReqDto.getWeight());
 		return productModel;
 	}
 }
