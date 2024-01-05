@@ -1,17 +1,17 @@
 package com.hemsw.asasaapi.veenal.service.gen;
 
-import com.hemsw.asasaapi.veenal.dto.req.TransporterReqDto;
+import com.hemsw.asasaapi.veenal.dto.req.DeliveryStatusReqDto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonUpsertResDto;
 import com.hemsw.asasaapi.veenal.dto.res.ErrorResDto;
-import com.hemsw.asasaapi.veenal.mapper.TransporterMapper;
+import com.hemsw.asasaapi.veenal.mapper.DeliveryStatusMapper;
 import com.hemsw.asasaapi.veenal.model.app.UserModel;
-import com.hemsw.asasaapi.veenal.model.gen.TransporterModel;
-import com.hemsw.asasaapi.veenal.dao.gen.TransporterDao;
-import com.hemsw.asasaapi.veenal.dto.ldto.TransporterLdto;
+import com.hemsw.asasaapi.veenal.model.gen.DeliveryStatusModel;
+import com.hemsw.asasaapi.veenal.dao.gen.DeliveryStatusDao;
+import com.hemsw.asasaapi.veenal.dto.ldto.DeliveryStatusLdto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonDeleteResDto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonGetOneResDto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonGetResDto;
-import com.hemsw.asasaapi.veenal.dto.res.TransporterResDto;
+import com.hemsw.asasaapi.veenal.dto.res.DeliveryStatusResDto;
 import jakarta.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
@@ -20,20 +20,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 @Service
-public class TransporterSer
+public class DeliveryStatusSer
 {
 
 	@Autowired
-	private TransporterDao transporterDao;
+	private DeliveryStatusDao deliveryStatusDao;
 
 	@Transactional
-	public CommonUpsertResDto create(TransporterReqDto transporterReqDto, UserModel userModel)
+	public CommonUpsertResDto create(DeliveryStatusReqDto deliveryStatusReqDto, UserModel userModel)
 	{
 		try
 		{
-			if (transporterReqDto == null
-					|| transporterReqDto.getName() == null
-					|| transporterReqDto.getName().isEmpty())
+			if (deliveryStatusReqDto == null
+					|| deliveryStatusReqDto.getName() == null
+					|| deliveryStatusReqDto.getName().isEmpty())
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -43,7 +43,7 @@ public class TransporterSer
 				));
 			}
 
-			if (transporterDao.isNameExists(transporterReqDto.getName()))
+			if (deliveryStatusDao.isNameExists(deliveryStatusReqDto.getName()))
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -53,11 +53,11 @@ public class TransporterSer
 				));
 			}
 
-			TransporterModel transporterModel = TransporterMapper.toTransporterModel(transporterReqDto);
-			transporterModel.setCreatedByUserId(userModel.getId());
-			transporterDao.create(transporterModel);
+			DeliveryStatusModel deliveryStatusModel = DeliveryStatusMapper.toDeliveryStatusModel(deliveryStatusReqDto);
+			deliveryStatusModel.setCreatedByUserId(userModel.getId());
+			deliveryStatusDao.create(deliveryStatusModel);
 
-			return new CommonUpsertResDto(transporterModel.getId());
+			return new CommonUpsertResDto(deliveryStatusModel.getId());
 		}
 		catch (Exception ex)
 		{
@@ -75,12 +75,12 @@ public class TransporterSer
 	}
 
 	@Transactional
-	public CommonUpsertResDto update(int id, TransporterReqDto transporterReqDto)
+	public CommonUpsertResDto update(int id, DeliveryStatusReqDto deliveryStatusReqDto)
 	{
 		try
 		{
-			TransporterModel transporterModel = transporterDao.getById(id);
-			if (transporterModel == null)
+			DeliveryStatusModel deliveryStatusModel = deliveryStatusDao.getById(id);
+			if (deliveryStatusModel == null)
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -90,9 +90,9 @@ public class TransporterSer
 				));
 			}
 
-			if (transporterReqDto == null
-					|| transporterReqDto.getName() == null
-					|| transporterReqDto.getName().isEmpty())
+			if (deliveryStatusReqDto == null
+					|| deliveryStatusReqDto.getName() == null
+					|| deliveryStatusReqDto.getName().isEmpty())
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -102,8 +102,8 @@ public class TransporterSer
 				));
 			}
 
-			TransporterModel transporterModelByName = transporterDao.getByName(transporterReqDto.getName());
-			if (transporterModelByName != null && transporterModelByName.getId() != id)
+			DeliveryStatusModel deliveryStatusModelByName = deliveryStatusDao.getByName(deliveryStatusReqDto.getName());
+			if (deliveryStatusModelByName != null && deliveryStatusModelByName.getId() != id)
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -113,9 +113,9 @@ public class TransporterSer
 				));
 			}
 
-			TransporterMapper.toTransporterModel(transporterModel, transporterReqDto);
+			DeliveryStatusMapper.toDeliveryStatusModel(deliveryStatusModel, deliveryStatusReqDto);
 
-			return new CommonUpsertResDto(transporterModel.getId());
+			return new CommonUpsertResDto(deliveryStatusModel.getId());
 		}
 		catch (Exception ex)
 		{
@@ -132,12 +132,12 @@ public class TransporterSer
 	}
 
 	@Transactional
-	public CommonGetResDto<List<TransporterLdto>> getLdtos(String name, String transporterId)
+	public CommonGetResDto<List<DeliveryStatusLdto>> getLdtos(String name, String deliveryStatusId)
 	{
 		try
 		{
-			List<TransporterLdto> data = null;
-			data = transporterDao.getLdtos(name, transporterId);
+			List<DeliveryStatusLdto> data = null;
+			data = deliveryStatusDao.getLdtos(name, deliveryStatusId);
 			return new CommonGetResDto(data);
 		}
 		catch (Exception ex)
@@ -155,12 +155,12 @@ public class TransporterSer
 	}
 
 	@Transactional
-	public CommonGetOneResDto<TransporterResDto> getById(int id)
+	public CommonGetOneResDto<DeliveryStatusResDto> getById(int id)
 	{
 		try
 		{
-			TransporterResDto data = null;
-			data = TransporterMapper.toTransporterResDto(transporterDao.getById(id));
+			DeliveryStatusResDto data = null;
+			data = DeliveryStatusMapper.toDeliveryStatusResDto(deliveryStatusDao.getById(id));
 
 			return new CommonGetOneResDto(data);
 		}
@@ -183,7 +183,7 @@ public class TransporterSer
 	{
 		try
 		{
-			transporterDao.delete(id);
+			deliveryStatusDao.delete(id);
 
 			return new CommonDeleteResDto();
 		}

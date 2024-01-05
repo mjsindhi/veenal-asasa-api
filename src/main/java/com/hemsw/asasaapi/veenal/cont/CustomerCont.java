@@ -1,6 +1,6 @@
 package com.hemsw.asasaapi.veenal.cont;
 
-import com.hemsw.asasaapi.veenal.dto.req.CustomerReqDto;
+import com.hemsw.asasaapi.veenal.dto.rrdto.CustomerRrDto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonUpsertResDto;
 import com.hemsw.asasaapi.veenal.model.app.UserModel;
 import com.hemsw.asasaapi.veenal.dto.res.CommonGetResDto;
@@ -24,7 +24,7 @@ public class CustomerCont
 	CustomerSer customerSer;
 
 	@PostMapping("/customers")
-	public ResponseEntity create(@RequestBody CustomerReqDto customerReqDto)
+	public ResponseEntity create(@RequestBody CustomerRrDto customerReqDto)
 	{
 
 		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

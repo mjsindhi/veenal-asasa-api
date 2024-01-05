@@ -30,6 +30,9 @@ public class CustomerModel
 	@Column(name = "state_id")
 	private Integer stateId;
 
+	@Column(name = "country_id")
+	private Integer countryId;
+
 	@Column(name = "pin")
 	private String pin;
 
@@ -38,6 +41,36 @@ public class CustomerModel
 
 	@Column(name = "gst_no")
 	private String gstNo;
+
+	@Column(name = "is_shipping_same_as_billing")
+	private boolean isShippingSameAsBilling;
+
+	@Column(name = "shipping_name")
+	private String shippingName;
+
+	@Column(name = "shipping_address")
+	private String shippingAddress;
+
+	@Column(name = "shipping_city")
+	private String shippingCity;
+
+	@Column(name = "shipping_state_id")
+	private Integer shippingStateId;
+
+	@Column(name = "shipping_country_id")
+	private Integer shippingCountryId;
+
+	@Column(name = "shipping_pin")
+	private String shippingPin;
+
+	@Column(name = "shipping_email")
+	private String shippingEmail;
+
+	@Column(name = "shipping_gst_no")
+	private String shippingGstNo;
+
+	@Column(name = "shipping_contact_no")
+	private String shippingContactNo;
 
 	@Column(name = "bank_name")
 	private String bankName;
@@ -65,6 +98,9 @@ public class CustomerModel
 
 	@Column(name = "pref_trans_id")
 	private Integer prefTransId;
+
+	@Column(name = "pref_agent_id")
+	private Integer prefAgentId;
 
 	@Column(name = "note")
 	private String note;

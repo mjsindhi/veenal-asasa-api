@@ -3,6 +3,7 @@ package com.hemsw.asasaapi.veenal.dao.gen;
 import com.hemsw.asasaapi.veenal.SqlHelper;
 import com.hemsw.asasaapi.veenal.TableName;
 import com.hemsw.asasaapi.veenal.dto.ldto.TransporterLdto;
+import com.hemsw.asasaapi.veenal.helper.DaoHelper;
 import com.hemsw.asasaapi.veenal.model.gen.TransporterModel;
 import com.hemsw.asasaapi.veenal.util.Util;
 import jakarta.persistence.EntityManager;
@@ -27,16 +28,18 @@ public class TransporterDao
 		session.persist(transporterModel);
 	}
 
-	public boolean isNameExists(String name)
+	public TransporterModel getById(int id)
 	{
-		String sql = String.format("SELECT COUNT(id)>0 FROM {table_transporter} WHERE name = '%s'", SqlHelper.escape(name));
-		Map<String, String> map = new HashMap<>();
-		map.put("table_transporter", "transporter");
-		sql = Util.formatString(sql, map);
-		return (boolean) session
-				.createNativeQuery(sql, Boolean.TYPE)
-				.getSingleResult();
+		String sql = String.format(DaoHelper.SELECT_BY_ID_SQL, TableName.TRANSPORTER, String.valueOf(id));
+		List<TransporterModel> dtos = session.createNativeQuery(sql, TransporterModel.class).getResultList();
+		return (dtos == null || dtos.isEmpty() ? null : dtos.get(0));
+	}
 
+	public TransporterModel getByName(String name)
+	{
+		String sql = String.format(DaoHelper.SELECT_BY_NAME_SQL, TableName.TRANSPORTER, SqlHelper.escape(name));
+		List<TransporterModel> dtos = session.createNativeQuery(sql, TransporterModel.class).getResultList();
+		return (dtos == null || dtos.isEmpty() ? null : dtos.get(0));
 	}
 
 	public List<TransporterLdto> getLdtos(String name, String transporterId)
@@ -80,6 +83,18 @@ public class TransporterDao
 
 	}
 
+	public boolean isNameExists(String name)
+	{
+		String sql = String.format("SELECT COUNT(id)>0 FROM {table_transporter} WHERE name = '%s'", SqlHelper.escape(name));
+		Map<String, String> map = new HashMap<>();
+		map.put("table_transporter", "transporter");
+		sql = Util.formatString(sql, map);
+		return (boolean) session
+				.createNativeQuery(sql, Boolean.TYPE)
+				.getSingleResult();
+
+	}
+
 	public boolean isIdExists(int id)
 	{
 		String sql = String.format("SELECT COUNT(id)>0 FROM {table_transporter} WHERE id = %s", id);
@@ -90,5 +105,10 @@ public class TransporterDao
 				.createNativeQuery(sql, Boolean.TYPE)
 				.getSingleResult();
 
+	}
+
+	public void delete(int id)
+	{
+		session.createNativeQuery(String.format(DaoHelper.DELETE_BY_ID_SQL, TableName.TRANSPORTER, id)).executeUpdate();
 	}
 }

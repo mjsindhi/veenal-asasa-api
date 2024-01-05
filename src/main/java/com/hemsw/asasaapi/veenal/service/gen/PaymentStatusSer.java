@@ -1,17 +1,17 @@
 package com.hemsw.asasaapi.veenal.service.gen;
 
-import com.hemsw.asasaapi.veenal.dto.req.TransporterReqDto;
+import com.hemsw.asasaapi.veenal.dto.req.PaymentStatusReqDto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonUpsertResDto;
 import com.hemsw.asasaapi.veenal.dto.res.ErrorResDto;
-import com.hemsw.asasaapi.veenal.mapper.TransporterMapper;
+import com.hemsw.asasaapi.veenal.mapper.PaymentStatusMapper;
 import com.hemsw.asasaapi.veenal.model.app.UserModel;
-import com.hemsw.asasaapi.veenal.model.gen.TransporterModel;
-import com.hemsw.asasaapi.veenal.dao.gen.TransporterDao;
-import com.hemsw.asasaapi.veenal.dto.ldto.TransporterLdto;
+import com.hemsw.asasaapi.veenal.model.gen.PaymentStatusModel;
+import com.hemsw.asasaapi.veenal.dao.gen.PaymentStatusDao;
+import com.hemsw.asasaapi.veenal.dto.ldto.PaymentStatusLdto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonDeleteResDto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonGetOneResDto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonGetResDto;
-import com.hemsw.asasaapi.veenal.dto.res.TransporterResDto;
+import com.hemsw.asasaapi.veenal.dto.res.PaymentStatusResDto;
 import jakarta.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
@@ -20,20 +20,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 @Service
-public class TransporterSer
+public class PaymentStatusSer
 {
 
 	@Autowired
-	private TransporterDao transporterDao;
+	private PaymentStatusDao paymentStatusDao;
 
 	@Transactional
-	public CommonUpsertResDto create(TransporterReqDto transporterReqDto, UserModel userModel)
+	public CommonUpsertResDto create(PaymentStatusReqDto paymentStatusReqDto, UserModel userModel)
 	{
 		try
 		{
-			if (transporterReqDto == null
-					|| transporterReqDto.getName() == null
-					|| transporterReqDto.getName().isEmpty())
+			if (paymentStatusReqDto == null
+					|| paymentStatusReqDto.getName() == null
+					|| paymentStatusReqDto.getName().isEmpty())
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -43,7 +43,7 @@ public class TransporterSer
 				));
 			}
 
-			if (transporterDao.isNameExists(transporterReqDto.getName()))
+			if (paymentStatusDao.isNameExists(paymentStatusReqDto.getName()))
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -53,11 +53,11 @@ public class TransporterSer
 				));
 			}
 
-			TransporterModel transporterModel = TransporterMapper.toTransporterModel(transporterReqDto);
-			transporterModel.setCreatedByUserId(userModel.getId());
-			transporterDao.create(transporterModel);
+			PaymentStatusModel paymentStatusModel = PaymentStatusMapper.toPaymentStatusModel(paymentStatusReqDto);
+			paymentStatusModel.setCreatedByUserId(userModel.getId());
+			paymentStatusDao.create(paymentStatusModel);
 
-			return new CommonUpsertResDto(transporterModel.getId());
+			return new CommonUpsertResDto(paymentStatusModel.getId());
 		}
 		catch (Exception ex)
 		{
@@ -75,12 +75,12 @@ public class TransporterSer
 	}
 
 	@Transactional
-	public CommonUpsertResDto update(int id, TransporterReqDto transporterReqDto)
+	public CommonUpsertResDto update(int id, PaymentStatusReqDto paymentStatusReqDto)
 	{
 		try
 		{
-			TransporterModel transporterModel = transporterDao.getById(id);
-			if (transporterModel == null)
+			PaymentStatusModel paymentStatusModel = paymentStatusDao.getById(id);
+			if (paymentStatusModel == null)
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -90,9 +90,9 @@ public class TransporterSer
 				));
 			}
 
-			if (transporterReqDto == null
-					|| transporterReqDto.getName() == null
-					|| transporterReqDto.getName().isEmpty())
+			if (paymentStatusReqDto == null
+					|| paymentStatusReqDto.getName() == null
+					|| paymentStatusReqDto.getName().isEmpty())
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -102,8 +102,8 @@ public class TransporterSer
 				));
 			}
 
-			TransporterModel transporterModelByName = transporterDao.getByName(transporterReqDto.getName());
-			if (transporterModelByName != null && transporterModelByName.getId() != id)
+			PaymentStatusModel paymentStatusModelByName = paymentStatusDao.getByName(paymentStatusReqDto.getName());
+			if (paymentStatusModelByName != null && paymentStatusModelByName.getId() != id)
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -113,9 +113,9 @@ public class TransporterSer
 				));
 			}
 
-			TransporterMapper.toTransporterModel(transporterModel, transporterReqDto);
+			PaymentStatusMapper.toPaymentStatusModel(paymentStatusModel, paymentStatusReqDto);
 
-			return new CommonUpsertResDto(transporterModel.getId());
+			return new CommonUpsertResDto(paymentStatusModel.getId());
 		}
 		catch (Exception ex)
 		{
@@ -132,12 +132,12 @@ public class TransporterSer
 	}
 
 	@Transactional
-	public CommonGetResDto<List<TransporterLdto>> getLdtos(String name, String transporterId)
+	public CommonGetResDto<List<PaymentStatusLdto>> getLdtos(String name, String paymentStatusId)
 	{
 		try
 		{
-			List<TransporterLdto> data = null;
-			data = transporterDao.getLdtos(name, transporterId);
+			List<PaymentStatusLdto> data = null;
+			data = paymentStatusDao.getLdtos(name, paymentStatusId);
 			return new CommonGetResDto(data);
 		}
 		catch (Exception ex)
@@ -155,12 +155,12 @@ public class TransporterSer
 	}
 
 	@Transactional
-	public CommonGetOneResDto<TransporterResDto> getById(int id)
+	public CommonGetOneResDto<PaymentStatusResDto> getById(int id)
 	{
 		try
 		{
-			TransporterResDto data = null;
-			data = TransporterMapper.toTransporterResDto(transporterDao.getById(id));
+			PaymentStatusResDto data = null;
+			data = PaymentStatusMapper.toPaymentStatusResDto(paymentStatusDao.getById(id));
 
 			return new CommonGetOneResDto(data);
 		}
@@ -183,7 +183,7 @@ public class TransporterSer
 	{
 		try
 		{
-			transporterDao.delete(id);
+			paymentStatusDao.delete(id);
 
 			return new CommonDeleteResDto();
 		}

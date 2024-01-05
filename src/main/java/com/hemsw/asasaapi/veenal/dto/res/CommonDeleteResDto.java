@@ -1,49 +1,48 @@
 package com.hemsw.asasaapi.veenal.dto.res;
 
-import com.hemsw.asasaapi.veenal.util.ExceptionUtil;
 import java.util.Date;
 import lombok.ToString;
 
 @ToString
-public class CommonUpsertResDto
+public class CommonDeleteResDto
 {
 
 	private boolean isSuccess;
 	private boolean hasException;
-	private int createdId;
 	private ErrorResDto errorResDto;
 
-	public CommonUpsertResDto(ErrorResDto errorResDto)
-	{
-		this.isSuccess = false;
-		this.hasException = false;
-		this.createdId = -1;
-		this.errorResDto = errorResDto;
-	}
-
-	public CommonUpsertResDto(int createdId)
+	public CommonDeleteResDto()
 	{
 		this.isSuccess = true;
 		this.hasException = false;
-		this.createdId = createdId;
 		this.errorResDto = null;
 	}
 
-	public CommonUpsertResDto(Exception ex)
+	public CommonDeleteResDto(ErrorResDto errorResDto)
 	{
 		this.isSuccess = false;
-		this.hasException = true;
-		this.createdId = -1;
-		this.errorResDto = new ErrorResDto(new Date(), "internal_server_error", ExceptionUtil.getString(ex), ExceptionUtil.getString(ex));
-
+		this.hasException = false;
+		this.errorResDto = errorResDto;
 	}
 
-	public CommonUpsertResDto(Exception... exceptions)
+	public CommonDeleteResDto(Exception ex)
 	{
 		this.isSuccess = false;
 		this.hasException = true;
-		this.createdId = -1;
-		this.errorResDto = new ErrorResDto();
+		//this.errorMsg = ExceptionUtil.getString(ex);
+		this.errorResDto = new ErrorResDto(
+				new Date(),
+				"internal_server_error",
+				"Internal server error occured",
+				"Internal server error occured"
+		);
+	}
+
+	public CommonDeleteResDto(Exception... exceptions)
+	{
+		this.isSuccess = false;
+		this.hasException = true;
+		/*
 		this.errorResDto.setTimestamp(new Date());
 		this.errorResDto.setCode("internal_server_error");
 		for (Exception exception : exceptions)
@@ -51,13 +50,19 @@ public class CommonUpsertResDto
 			this.errorResDto.setDetails(this.errorResDto + "\n" + ExceptionUtil.getString(exception));
 		}
 		this.errorResDto.setMessage(this.errorResDto.getDetails());
+		 */
+		this.errorResDto = new ErrorResDto(
+				new Date(),
+				"internal_server_error",
+				"Internal server error occured",
+				"Internal server error occured"
+		);
 	}
 
-	public CommonUpsertResDto(boolean isSuccess, boolean hasException, int createdId, ErrorResDto errorResDto)
+	public CommonDeleteResDto(boolean isSuccess, boolean hasException, ErrorResDto errorResDto)
 	{
 		this.isSuccess = isSuccess;
 		this.hasException = hasException;
-		this.createdId = createdId;
 		this.errorResDto = errorResDto;
 	}
 
@@ -79,16 +84,6 @@ public class CommonUpsertResDto
 	public void setHasException(boolean hasException)
 	{
 		this.hasException = hasException;
-	}
-
-	public int getCreatedId()
-	{
-		return createdId;
-	}
-
-	public void setCreatedId(int createdId)
-	{
-		this.createdId = createdId;
 	}
 
 	public ErrorResDto getErrorResDto()

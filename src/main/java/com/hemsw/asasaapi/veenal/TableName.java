@@ -24,9 +24,11 @@ public class TableName
 	public static final String COUNTRY = "country";
 	public static final String CURRENCY = "currency";
 	public static final String CUSTOMER = "customer";
+	public static final String DELIVERY_STATUS = "delivery_status";
 	public static final String ESTIMATE = "estimate";
 	public static final String ESTIMATE_ITEM = "estimate_item";
 	public static final String ESTIMATE_STATUS = "estimate_status";
+	public static final String FULFILLMENT_STATUS = "fulfillment_status";
 	public static final String GOODS_JOURNAL = "goods_journal";
 	public static final String JOURNAL = "journal";
 	public static final String JOURNAL_ITEM = "journal_item";
@@ -38,6 +40,7 @@ public class TableName
 	public static final String ORDER_SET_AGAINST = "order_set_against";
 	public static final String PAYMENT = "payment";
 	public static final String PAYMENT_MODE = "payment_mode";
+	public static final String PAYMENT_STATUS = "payment_status";
 	public static final String PAYMENT_TERMS = "payment_terms";
 	public static final String PI_ITEM = "pi_item";
 	public static final String PRICE_LIST = "price_list";

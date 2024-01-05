@@ -1,15 +1,15 @@
 package com.hemsw.asasaapi.veenal.cont;
 
-import com.hemsw.asasaapi.veenal.dto.req.TransporterReqDto;
+import com.hemsw.asasaapi.veenal.dto.req.PaymentStatusReqDto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonDeleteResDto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonGetOneResDto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonUpsertResDto;
 import com.hemsw.asasaapi.veenal.model.app.UserModel;
 import com.hemsw.asasaapi.veenal.dto.res.CommonGetResDto;
 import com.hemsw.asasaapi.veenal.dto.res.ErrorResDto;
-import com.hemsw.asasaapi.veenal.dto.res.TransporterResDto;
+import com.hemsw.asasaapi.veenal.dto.res.PaymentStatusResDto;
 import com.hemsw.asasaapi.veenal.security.UserDetailsImpl;
-import com.hemsw.asasaapi.veenal.service.gen.TransporterSer;
+import com.hemsw.asasaapi.veenal.service.gen.PaymentStatusSer;
 import com.hemsw.asasaapi.veenal.util.Util;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Date;
@@ -28,20 +28,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Tag(name = "Test")
-public class TransporterCont
+public class PaymentStatusCont
 {
 
 	@Autowired
-	TransporterSer transporterSer;
+	PaymentStatusSer paymentStatusSer;
 
-	@PostMapping("/transporters")
-	public ResponseEntity createTransporter(@RequestBody TransporterReqDto transporterReqDto)
+	@PostMapping("/payment-statuses")
+	public ResponseEntity createPaymentStatus(@RequestBody PaymentStatusReqDto paymentStatusReqDto)
 	{
 
 		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserModel userModel = userDetailsImpl.getUserModel();
 
-		CommonUpsertResDto commonUpsertResDto = transporterSer.create(transporterReqDto, userModel);
+		CommonUpsertResDto commonUpsertResDto = paymentStatusSer.create(paymentStatusReqDto, userModel);
 
 		if (commonUpsertResDto.isHasException())
 		{
@@ -60,15 +60,15 @@ public class TransporterCont
 		return ResponseEntity.status(HttpStatus.CREATED).body(null);
 	}
 
-	@GetMapping("/transporters")
-	public ResponseEntity getTransporters(
+	@GetMapping("/payment-statuses")
+	public ResponseEntity getPaymentStatuses(
 			@RequestParam(required = false) String name,
-			@RequestParam(required = false) String transporterId
+			@RequestParam(required = false) String paymentStatusId
 	)
 	{
 		CommonGetResDto commonGetResDto = null;
 
-		commonGetResDto = transporterSer.getLdtos(name, transporterId);
+		commonGetResDto = paymentStatusSer.getLdtos(name, paymentStatusId);
 
 		if (commonGetResDto.isHasException())
 		{
@@ -87,8 +87,8 @@ public class TransporterCont
 		return ResponseEntity.ok(commonGetResDto.getRows());
 	}
 
-	@GetMapping("/transporters/{id}")
-	public ResponseEntity getTransporter(@PathVariable("id") String idStr)
+	@GetMapping("/payment-statuses/{id}")
+	public ResponseEntity getPaymentStatus(@PathVariable("id") String idStr)
 	{
 		if (idStr == null)
 		{
@@ -116,7 +116,7 @@ public class TransporterCont
 
 		int id = Integer.parseInt(idStr);
 
-		CommonGetOneResDto<TransporterResDto> commonGetOneResDto = transporterSer.getById(id);
+		CommonGetOneResDto<PaymentStatusResDto> commonGetOneResDto = paymentStatusSer.getById(id);
 
 		if (commonGetOneResDto.isHasException())
 		{
@@ -135,11 +135,11 @@ public class TransporterCont
 		return ResponseEntity.ok(commonGetOneResDto.getItem());
 	}
 
-	@PutMapping("/transporters/{id}")
-	public ResponseEntity updateTransporter(@PathVariable("id") int id, @RequestBody TransporterReqDto transporterReqDto)
+	@PutMapping("/payment-statuses/{id}")
+	public ResponseEntity updatePaymentStatus(@PathVariable("id") int id, @RequestBody PaymentStatusReqDto paymentStatusReqDto)
 	{
 
-		CommonUpsertResDto commonUpsertResDto = transporterSer.update(id, transporterReqDto);
+		CommonUpsertResDto commonUpsertResDto = paymentStatusSer.update(id, paymentStatusReqDto);
 
 		if (commonUpsertResDto.isHasException())
 		{
@@ -158,10 +158,10 @@ public class TransporterCont
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 	}
 
-	@DeleteMapping("/transporters/{id}")
-	public ResponseEntity deleteTransporter(@PathVariable("id") int id)
+	@DeleteMapping("/payment-statuses/{id}")
+	public ResponseEntity deletePaymentStatus(@PathVariable("id") int id)
 	{
-		CommonDeleteResDto commonDeleteResDto = transporterSer.delete(id);
+		CommonDeleteResDto commonDeleteResDto = paymentStatusSer.delete(id);
 
 		if (commonDeleteResDto.isHasException())
 		{

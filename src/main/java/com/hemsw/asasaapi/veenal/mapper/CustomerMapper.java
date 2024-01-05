@@ -1,6 +1,6 @@
 package com.hemsw.asasaapi.veenal.mapper;
 
-import com.hemsw.asasaapi.veenal.dto.req.CustomerReqDto;
+import com.hemsw.asasaapi.veenal.dto.rrdto.CustomerRrDto;
 import com.hemsw.asasaapi.veenal.enums.AccountType;
 import com.hemsw.asasaapi.veenal.enums.VoucherType;
 import com.hemsw.asasaapi.veenal.model.gen.AcctModel;
@@ -13,7 +13,7 @@ public class CustomerMapper
 {
 
 	public static AcctModel toAcctModel(
-			CustomerReqDto customerReqDto,
+			CustomerRrDto customerReqDto,
 			int createdByUserId
 	)
 	{
@@ -31,7 +31,7 @@ public class CustomerMapper
 	}
 
 	public static VoucherModel toVoucherModel(
-			CustomerReqDto customerReqDto,
+			CustomerRrDto customerReqDto,
 			int acctId,
 			int createdByUserId
 	)
@@ -44,24 +44,37 @@ public class CustomerMapper
 		return voucherModel;
 	}
 
-	public static CustomerModel toCustomerModel(CustomerReqDto customerReqDto)
+	public static CustomerModel toCustomerModel(CustomerRrDto customerReqDto)
 	{
-		return new CustomerModel()
-				.setAddress(customerReqDto.getAddress() == null ? "" : customerReqDto.getAddress())
-				.setCity(customerReqDto.getCity() == null ? "" : customerReqDto.getCity())
-				.setStateId(customerReqDto.getStateId())
-				.setPin(customerReqDto.getPin())
-				.setEmail(customerReqDto.getEmail() == null ? "" : customerReqDto.getEmail())
-				.setGstNo(customerReqDto.getGstNo() == null ? "" : customerReqDto.getGstNo())
-				.setBankName(customerReqDto.getBankName() == null ? "" : customerReqDto.getBankName())
-				.setBankBranchName(customerReqDto.getBankBranchName() == null ? "" : customerReqDto.getBankBranchName())
-				.setBankAcctName(customerReqDto.getBankAcctName() == null ? "" : customerReqDto.getBankAcctName())
-				.setBankAcctNo(customerReqDto.getBankAcctNo() == null ? "" : customerReqDto.getBankAcctNo())
-				.setBankIfsc(customerReqDto.getBankIfsc() == null ? "" : customerReqDto.getBankIfsc())
-				.setCreditDays(customerReqDto.getCreditDays())
-				.setCreditAmtLimit(customerReqDto.getCreditAmtLimit())
-				.setDisc(customerReqDto.getDisc())
-				.setPrefTransId(customerReqDto.getPrefTransId())
-				.setNote(customerReqDto.getNote() == null ? "" : customerReqDto.getNote());
+		CustomerModel customerModel = new CustomerModel();
+		customerModel.setAddress(customerReqDto.getAddress() == null ? "" : customerReqDto.getAddress());
+		customerModel.setCity(customerReqDto.getCity() == null ? "" : customerReqDto.getCity());
+		customerModel.setStateId(customerReqDto.getStateId());
+		customerModel.setStateId(customerReqDto.getCountryId());
+		customerModel.setPin(customerReqDto.getPin());
+		customerModel.setEmail(customerReqDto.getEmail() == null ? "" : customerReqDto.getEmail());
+		customerModel.setGstNo(customerReqDto.getGstNo() == null ? "" : customerReqDto.getGstNo());
+		customerModel.setShippingSameAsBilling(customerReqDto.isShippingSameAsBilling());
+		customerModel.setShippingName(customerReqDto.getShippingName() == null ? "" : customerReqDto.getShippingName());
+		customerModel.setShippingAddress(customerReqDto.getShippingAddress() == null ? "" : customerReqDto.getShippingAddress());
+		customerModel.setShippingCity(customerReqDto.getShippingCity() == null ? "" : customerReqDto.getShippingCity());
+		customerModel.setShippingStateId(customerReqDto.getShippingStateId());
+		customerModel.setShippingCountryId(customerReqDto.getShippingCountryId());
+		customerModel.setShippingPin(customerReqDto.getShippingPin());
+		customerModel.setShippingEmail(customerReqDto.getShippingEmail() == null ? "" : customerReqDto.getShippingEmail());
+		customerModel.setShippingGstNo(customerReqDto.getShippingGstNo() == null ? "" : customerReqDto.getShippingGstNo());
+		customerModel.setShippingContactNo(customerReqDto.getShippingContactNo() == null ? "" : customerReqDto.getShippingContactNo());
+		customerModel.setBankName(customerReqDto.getBankName() == null ? "" : customerReqDto.getBankName());
+		customerModel.setBankBranchName(customerReqDto.getBankBranchName() == null ? "" : customerReqDto.getBankBranchName());
+		customerModel.setBankAcctName(customerReqDto.getBankAcctName() == null ? "" : customerReqDto.getBankAcctName());
+		customerModel.setBankAcctNo(customerReqDto.getBankAcctNo() == null ? "" : customerReqDto.getBankAcctNo());
+		customerModel.setBankIfsc(customerReqDto.getBankIfsc() == null ? "" : customerReqDto.getBankIfsc());
+		customerModel.setCreditDays(customerReqDto.getCreditDays());
+		customerModel.setCreditAmtLimit(customerReqDto.getCreditAmtLimit());
+		customerModel.setDisc(customerReqDto.getDisc());
+		customerModel.setPrefTransId(customerReqDto.getPrefTransId());
+		customerModel.setPrefAgentId(customerReqDto.getPrefAgentId());
+		customerModel.setNote(customerReqDto.getNote() == null ? "" : customerReqDto.getNote());
+		return customerModel;
 	}
 }

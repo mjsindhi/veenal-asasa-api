@@ -24,7 +24,7 @@ public class PaymentModeCont
 	PaymentModeSer paymentModeSer;
 
 	@PostMapping("/payment-modes")
-	public ResponseEntity create(@RequestBody PaymentModeReqDto paymentModeReqDto)
+	public ResponseEntity createPaymentMode(@RequestBody PaymentModeReqDto paymentModeReqDto)
 	{
 
 		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

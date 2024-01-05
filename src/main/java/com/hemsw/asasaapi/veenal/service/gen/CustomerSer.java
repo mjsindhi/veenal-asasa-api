@@ -1,6 +1,6 @@
 package com.hemsw.asasaapi.veenal.service.gen;
 
-import com.hemsw.asasaapi.veenal.dto.req.CustomerReqDto;
+import com.hemsw.asasaapi.veenal.dto.rrdto.CustomerRrDto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonUpsertResDto;
 import com.hemsw.asasaapi.veenal.dto.res.ErrorResDto;
 import com.hemsw.asasaapi.veenal.enums.OpeningBalanceType;
@@ -43,7 +43,7 @@ public class CustomerSer
 	private CustomerDao customerDao;
 
 	@Transactional
-	public CommonUpsertResDto create(CustomerReqDto customerReqDto, UserModel userModel)
+	public CommonUpsertResDto create(CustomerRrDto customerReqDto, UserModel userModel)
 	{
 		if (customerReqDto == null
 				|| customerReqDto.getName() == null
