@@ -7,7 +7,7 @@ import com.hemsw.asasaapi.veenal.model.gen.AcctModel;
 import com.hemsw.asasaapi.veenal.model.gen.SupplierModel;
 import com.hemsw.asasaapi.veenal.model.gen.VoucherModel;
 import com.hemsw.asasaapi.veenal.util.Util;
-import java.sql.Date;
+import java.util.Date;
 
 public class SupplierMapper
 {

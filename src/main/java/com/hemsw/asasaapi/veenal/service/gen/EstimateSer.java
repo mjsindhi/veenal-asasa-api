@@ -8,9 +8,11 @@ import com.hemsw.asasaapi.veenal.dao.gen.EstimateItemDao;
 import com.hemsw.asasaapi.veenal.dao.gen.EstimateOthChDao;
 import com.hemsw.asasaapi.veenal.dao.gen.EstimateOthChOnItemDao;
 import com.hemsw.asasaapi.veenal.dao.gen.EstimateOthChTaxableDao;
+import com.hemsw.asasaapi.veenal.dao.gen.EstimateStatusDao;
 import com.hemsw.asasaapi.veenal.dao.gen.ProductDao;
 import com.hemsw.asasaapi.veenal.dao.gen.TaxCatDao;
 import com.hemsw.asasaapi.veenal.dao.gen.TaxDao;
+import com.hemsw.asasaapi.veenal.dao.gen.TransporterDao;
 import com.hemsw.asasaapi.veenal.dao.gen.VoucherDao;
 import com.hemsw.asasaapi.veenal.dto.hdto.ConfigHdto;
 import com.hemsw.asasaapi.veenal.dto.hdto.EstimatePendingProductHdto;
@@ -26,7 +28,9 @@ import com.hemsw.asasaapi.veenal.dto.hdto.TaxSummaryHdto;
 import com.hemsw.asasaapi.veenal.dto.hdto.TotalAmtContainerHdto;
 import com.hemsw.asasaapi.veenal.dto.hdto.hodto.EstimateHoDto;
 import com.hemsw.asasaapi.veenal.dto.ldto.EstimateLdto;
-import com.hemsw.asasaapi.veenal.dto.req.EstimateReqHoDto;
+import com.hemsw.asasaapi.veenal.dto.res.CommonDeleteResDto;
+import com.hemsw.asasaapi.veenal.dto.rr.EstimateRrHoDto;
+import com.hemsw.asasaapi.veenal.dto.res.CommonGetOneResDto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonGetResDto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonUpsertResDto;
 import com.hemsw.asasaapi.veenal.dto.res.ErrorResDto;
@@ -75,6 +79,9 @@ public class EstimateSer //
 	ColSettingDao colSettingDao;
 
 	@Autowired
+	EstimateStatusDao estimateStatusDao;
+
+	@Autowired
 	EstimateDao estimateDao;
 
 	@Autowired
@@ -120,10 +127,13 @@ public class EstimateSer //
 	AcctDao acctDao;
 
 	@Autowired
+	TransporterDao transporterDao;
+
+	@Autowired
 	ConfigSer configSer;
 
 	@Transactional
-	public CommonUpsertResDto create(EstimateReqHoDto estimateReqHoDto, UserModel userModel)
+	public CommonUpsertResDto create(EstimateRrHoDto estimateReqHoDto, UserModel userModel)
 	{
 		try
 		{
@@ -138,7 +148,7 @@ public class EstimateSer //
 				));
 			}
 
-			if (estimateReqHoDto.getEstimateReqDto().getDate() == null)
+			if (estimateReqHoDto.getEstimateRrDto().getDate() == null)
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -148,8 +158,8 @@ public class EstimateSer //
 				));
 			}
 
-			if (estimateReqHoDto.getEstimateReqDto().getCustomerId() == null
-					|| !acctDao.isIdExists(estimateReqHoDto.getEstimateReqDto().getCustomerId()))
+			if (estimateReqHoDto.getEstimateRrDto().getCustomerId() == null
+					|| !acctDao.isIdExists(estimateReqHoDto.getEstimateRrDto().getCustomerId()))
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -159,8 +169,8 @@ public class EstimateSer //
 				));
 			}
 
-			if (estimateReqHoDto.getEstimateReqDto().getCustomerId() == null
-					|| !acctDao.isIdExists(estimateReqHoDto.getEstimateReqDto().getCustomerId()))
+			if (estimateReqHoDto.getEstimateRrDto().getCustomerId() == null
+					|| !acctDao.isIdExists(estimateReqHoDto.getEstimateRrDto().getCustomerId()))
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -170,8 +180,8 @@ public class EstimateSer //
 				));
 			}
 
-			if (estimateReqHoDto.getEstimateItemReqDtos() == null
-					|| estimateReqHoDto.getEstimateItemReqDtos().isEmpty())
+			if (estimateReqHoDto.getEstimateItemRrDtos() == null
+					|| estimateReqHoDto.getEstimateItemRrDtos().isEmpty())
 			{
 				return new CommonUpsertResDto(new ErrorResDto(
 						new Date(),
@@ -181,25 +191,31 @@ public class EstimateSer //
 				));
 			}
 
-			if (estimateReqHoDto.getEstimateReqDto().getStatusId() == null)
+			if (estimateReqHoDto.getEstimateRrDto().getStatusId() == null)
 			{
-				estimateReqHoDto.getEstimateReqDto().setStatusId(2);
+				estimateReqHoDto.getEstimateRrDto().setStatusId(2);
 			}
-			if (estimateReqHoDto.getEstimateReqDto().getCurrencyId() == null)
+			if (estimateReqHoDto.getEstimateRrDto().getCurrencyId() == null)
 			{
-				estimateReqHoDto.getEstimateReqDto().setCurrencyId(101);
+				estimateReqHoDto.getEstimateRrDto().setCurrencyId(101);
 			}
-			if (estimateReqHoDto.getEstimateReqDto().getCurrencyConversionRate() == null)
+			if (estimateReqHoDto.getEstimateRrDto().getCurrencyConversionRate() == null)
 			{
-				estimateReqHoDto.getEstimateReqDto().setCurrencyConversionRate(BigDecimal.ONE);
+				estimateReqHoDto.getEstimateRrDto().setCurrencyConversionRate(BigDecimal.ONE);
 			}
 
-			VoucherModel voucherModel = VoucherMapper.toVoucherModel(estimateReqHoDto.getEstimateReqDto());
-			EstimateModel estimateModel = EstimateMapper.toEstimateModel(estimateReqHoDto.getEstimateReqDto());
-			List<EstimateItemModel> estimateItemModels = EstimateItemMapper.toEstimateItemModels(estimateReqHoDto.getEstimateItemReqDtos());
-			List<EstimateOthChOnItemModel> estimateOthChOnItemModels = EstimateOthChOnItemMapper.toEstimateOthChOnItemModels(estimateReqHoDto.getEstimateOthChOnItemReqDtos());
-			List<EstimateOthChTaxableModel> estimateOthChTaxableModels = EstimateOthChTaxableMapper.toEstimateOthChTaxableModels(estimateReqHoDto.getEstimateOthChTaxableReqDtos());
-			List<EstimateOthChModel> estimateOthChModels = EstimateOthChNonTaxableMapper.toEstimateOthChNonTaxableModels(estimateReqHoDto.getEstimateOthChNonTaxableReqDtos());
+			VoucherModel voucherModel = VoucherMapper.toVoucherModel(estimateReqHoDto.getEstimateRrDto());
+			EstimateModel estimateModel = EstimateMapper.toEstimateModel(estimateReqHoDto.getEstimateRrDto());
+			List<EstimateItemModel> estimateItemModels = EstimateItemMapper.toEstimateItemModels(estimateReqHoDto.getEstimateItemRrDtos());
+
+			for (EstimateItemModel estimateItemModel : estimateItemModels)
+			{
+				estimateItemModel.setId(0);
+			}
+
+			List<EstimateOthChOnItemModel> estimateOthChOnItemModels = EstimateOthChOnItemMapper.toEstimateOthChOnItemModels(estimateReqHoDto.getEstimateOthChOnItemRrDtos());
+			List<EstimateOthChTaxableModel> estimateOthChTaxableModels = EstimateOthChTaxableMapper.toEstimateOthChTaxableModels(estimateReqHoDto.getEstimateOthChTaxableRrDtos());
+			List<EstimateOthChModel> estimateOthChModels = EstimateOthChNonTaxableMapper.toEstimateOthChNonTaxableModels(estimateReqHoDto.getEstimateOthChNonTaxableRrDtos());
 
 			calcAll(estimateModel, estimateItemModels, estimateOthChOnItemModels, estimateOthChTaxableModels, estimateOthChModels);
 
@@ -237,7 +253,159 @@ public class EstimateSer //
 	}
 
 	@Transactional
-	public boolean update(EstimateReqHoDto estimateReqHoDto,
+	public CommonUpsertResDto update(int id, EstimateRrHoDto estimateReqHoDto)
+	{
+		try
+		{
+
+			if (id <= 0)
+			{
+				return new CommonUpsertResDto(new ErrorResDto(
+						new Date(),
+						"invalid_id",
+						"Enter valid id",
+						"Enter valid id"
+				));
+			}
+
+			EstimateModel estimateModel = estimateDao.getById(id);
+			if (estimateModel == null)
+			{
+				return new CommonUpsertResDto(new ErrorResDto(
+						new Date(),
+						"invalid_id",
+						"Enter valid id",
+						"Enter valid id"
+				));
+			}
+
+			if (estimateReqHoDto == null)
+			{
+				return new CommonUpsertResDto(new ErrorResDto(
+						new Date(),
+						"data_required",
+						"Enter data",
+						"Enter data"
+				));
+			}
+
+			if (estimateReqHoDto.getEstimateRrDto().getDate() == null)
+			{
+				return new CommonUpsertResDto(new ErrorResDto(
+						new Date(),
+						"date_required",
+						"Enter date",
+						"Enter date"
+				));
+			}
+
+			if (estimateReqHoDto.getEstimateRrDto().getCustomerId() == null
+					|| !acctDao.isIdExists(estimateReqHoDto.getEstimateRrDto().getCustomerId()))
+			{
+				return new CommonUpsertResDto(new ErrorResDto(
+						new Date(),
+						"customer_required",
+						"Select customer",
+						"Select customer"
+				));
+			}
+
+			if (estimateReqHoDto.getEstimateRrDto().getTransporterId() != null
+					&& !transporterDao.isIdExists(estimateReqHoDto.getEstimateRrDto().getTransporterId()))
+			{
+				return new CommonUpsertResDto(new ErrorResDto(
+						new Date(),
+						"company_profile_invalid",
+						"Select valid company profile",
+						"Select valid company profile"
+				));
+			}
+
+			if (estimateReqHoDto.getEstimateRrDto().getStatusId() != null
+					&& !estimateStatusDao.isIdExists(estimateReqHoDto.getEstimateRrDto().getStatusId()))
+			{
+				return new CommonUpsertResDto(new ErrorResDto(
+						new Date(),
+						"company_profile_invalid",
+						"Select valid company profile",
+						"Select valid company profile"
+				));
+			}
+
+			if (estimateReqHoDto.getEstimateItemRrDtos() == null
+					|| estimateReqHoDto.getEstimateItemRrDtos().isEmpty())
+			{
+				return new CommonUpsertResDto(new ErrorResDto(
+						new Date(),
+						"items_required",
+						"Enter items",
+						"Enter items"
+				));
+			}
+
+			if (estimateReqHoDto.getEstimateRrDto().getStatusId() == null)
+			{
+				estimateReqHoDto.getEstimateRrDto().setStatusId(2);
+			}
+
+			VoucherModel voucherModel = voucherDao.getById(id);
+			VoucherMapper.toVoucherModel(voucherModel, estimateReqHoDto.getEstimateRrDto());
+
+			EstimateMapper.toEstimateModel(estimateModel, estimateReqHoDto.getEstimateRrDto());
+
+			List<EstimateItemModel> estimateItemModels = EstimateItemMapper.toEstimateItemModels(estimateReqHoDto.getEstimateItemRrDtos());
+
+			for (int i = 0; i < estimateItemModels.size(); i++)
+			{
+				EstimateItemModel estimateItemModel = estimateItemModels.get(i);
+				if (estimateItemModel.getId() > 0)
+				{
+					EstimateItemModel estimateItemModelNew = estimateItemDao.getById(estimateItemModel.getId());
+					estimateItemModelNew.set(estimateItemModel);
+					estimateItemModel = estimateItemModelNew;
+				}
+			}
+
+			List<EstimateOthChOnItemModel> estimateOthChOnItemModels = EstimateOthChOnItemMapper.toEstimateOthChOnItemModels(estimateReqHoDto.getEstimateOthChOnItemRrDtos());
+			List<EstimateOthChTaxableModel> estimateOthChTaxableModels = EstimateOthChTaxableMapper.toEstimateOthChTaxableModels(estimateReqHoDto.getEstimateOthChTaxableRrDtos());
+			List<EstimateOthChModel> estimateOthChModels = EstimateOthChNonTaxableMapper.toEstimateOthChNonTaxableModels(estimateReqHoDto.getEstimateOthChNonTaxableRrDtos());
+
+			calcAll(estimateModel, estimateItemModels, estimateOthChOnItemModels, estimateOthChTaxableModels, estimateOthChModels);
+
+			if (estimateModel.getStatusId() == null)
+			{
+				estimateModel.setStatusId(2);
+			}
+
+			estimateDao.update(
+					estimateModel,
+					voucherModel.getNo(),
+					voucherModel.getDate()
+			);
+			createOrUpdateEstimateItem(estimateModel, estimateItemModels);
+			estimateOthChargeOnItemDao.save(estimateModel, estimateOthChOnItemModels);
+			estimateOthChargeTaxableDao.save(estimateModel, estimateOthChTaxableModels);
+			estimateOthChargeDao.save(estimateModel, estimateOthChModels);
+
+			return new CommonUpsertResDto(estimateModel.getVoucherModel().getId());
+		}
+		catch (Exception ex)
+		{
+			try
+			{
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				return new CommonUpsertResDto(ex);
+			}
+			catch (Exception ex2)
+			{
+				return new CommonUpsertResDto(ex, ex2);
+			}
+		}
+
+	}
+
+	@Transactional
+	public boolean update(EstimateRrHoDto estimateReqHoDto,
 			StringBuilder errorMsg)
 	{
 		errorMsg = errorMsg == null ? new StringBuilder() : errorMsg;
@@ -248,14 +416,14 @@ public class EstimateSer //
 
 	}
 
-	public boolean updateNonTx(EstimateReqHoDto estimateReqHoDto, StringBuilder errorMsg)
+	public boolean updateNonTx(EstimateRrHoDto estimateReqHoDto, StringBuilder errorMsg)
 	{
-		VoucherModel voucherModel = VoucherMapper.toVoucherModel(estimateReqHoDto.getEstimateReqDto());
-		EstimateModel estimateModel = EstimateMapper.toEstimateModel(estimateReqHoDto.getEstimateReqDto());
-		List<EstimateItemModel> estimateItemModels = EstimateItemMapper.toEstimateItemModels(estimateReqHoDto.getEstimateItemReqDtos());
-		List<EstimateOthChOnItemModel> estimateOthChOnItemModels = EstimateOthChOnItemMapper.toEstimateOthChOnItemModels(estimateReqHoDto.getEstimateOthChOnItemReqDtos());
-		List<EstimateOthChTaxableModel> estimateOthChTaxableModels = EstimateOthChTaxableMapper.toEstimateOthChTaxableModels(estimateReqHoDto.getEstimateOthChTaxableReqDtos());
-		List<EstimateOthChModel> estimateOthChModels = EstimateOthChNonTaxableMapper.toEstimateOthChNonTaxableModels(estimateReqHoDto.getEstimateOthChNonTaxableReqDtos());
+		VoucherModel voucherModel = VoucherMapper.toVoucherModel(estimateReqHoDto.getEstimateRrDto());
+		EstimateModel estimateModel = EstimateMapper.toEstimateModel(estimateReqHoDto.getEstimateRrDto());
+		List<EstimateItemModel> estimateItemModels = EstimateItemMapper.toEstimateItemModels(estimateReqHoDto.getEstimateItemRrDtos());
+		List<EstimateOthChOnItemModel> estimateOthChOnItemModels = EstimateOthChOnItemMapper.toEstimateOthChOnItemModels(estimateReqHoDto.getEstimateOthChOnItemRrDtos());
+		List<EstimateOthChTaxableModel> estimateOthChTaxableModels = EstimateOthChTaxableMapper.toEstimateOthChTaxableModels(estimateReqHoDto.getEstimateOthChTaxableRrDtos());
+		List<EstimateOthChModel> estimateOthChModels = EstimateOthChNonTaxableMapper.toEstimateOthChNonTaxableModels(estimateReqHoDto.getEstimateOthChNonTaxableRrDtos());
 
 		calcAll(estimateModel, estimateItemModels, estimateOthChOnItemModels, estimateOthChTaxableModels, estimateOthChModels);
 
@@ -290,6 +458,34 @@ public class EstimateSer //
 
 			estimateItemModel.setEstimateModel(estimateModel);
 			estimateItemDao.create(estimateItemModel);
+		}
+	}
+
+	@Transactional
+	public CommonGetOneResDto<EstimateRrHoDto> getRrHoDtoById(int estimateId)
+	{
+		try
+		{
+			EstimateRrHoDto data = new EstimateRrHoDto();
+			data.setEstimateRrDto(EstimateMapper.toEstimateRrDto(estimateDao.getById(estimateId)));
+			EstimateMapper.toEstimateRrDto(data.getEstimateRrDto(), voucherDao.getById(estimateId));
+			data.setEstimateItemRrDtos(EstimateItemMapper.toEstimateItemRrDtos(estimateItemDao.getByEstimateId(estimateId)));
+			data.setEstimateOthChOnItemRrDtos(EstimateOthChOnItemMapper.toEstimateOthChOnItemRrDtos(estimateOthChOnItemDao.get(estimateId, null, false)));
+			data.setEstimateOthChTaxableRrDtos(EstimateOthChTaxableMapper.toEstimateOthChTaxableRrDtos(estimateOthChTaxableDao.get(estimateId)));
+			data.setEstimateOthChNonTaxableRrDtos(EstimateOthChNonTaxableMapper.toEstimateOthChNonTaxableRrDtos(estimateOthChargeDao.get(estimateId)));
+			return new CommonGetOneResDto(data);
+		}
+		catch (Exception ex)
+		{
+			try
+			{
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				return new CommonGetOneResDto(ex);
+			}
+			catch (Exception ex2)
+			{
+				return new CommonGetOneResDto(ex, ex2);
+			}
 		}
 	}
 
@@ -462,6 +658,29 @@ public class EstimateSer //
 		EstimateModel = estimateDao.getById(id);
 
 		return EstimateModel;
+	}
+
+	@Transactional
+	public CommonDeleteResDto delete(int id)
+	{
+		try
+		{
+			voucherDao.delete(id);
+
+			return new CommonDeleteResDto();
+		}
+		catch (Exception ex)
+		{
+			try
+			{
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				return new CommonDeleteResDto(ex);
+			}
+			catch (Exception ex2)
+			{
+				return new CommonDeleteResDto(ex, ex2);
+			}
+		}
 	}
 
 	@Transactional

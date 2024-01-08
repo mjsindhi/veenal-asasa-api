@@ -2,12 +2,8 @@ package com.hemsw.asasaapi.veenal.mapper;
 
 import com.hemsw.asasaapi.veenal.dto.rrdto.CustomerRrDto;
 import com.hemsw.asasaapi.veenal.enums.AccountType;
-import com.hemsw.asasaapi.veenal.enums.VoucherType;
 import com.hemsw.asasaapi.veenal.model.gen.AcctModel;
 import com.hemsw.asasaapi.veenal.model.gen.CustomerModel;
-import com.hemsw.asasaapi.veenal.model.gen.VoucherModel;
-import com.hemsw.asasaapi.veenal.util.Util;
-import java.sql.Date;
 
 public class CustomerMapper
 {
@@ -30,27 +26,13 @@ public class CustomerMapper
 		return acctModel;
 	}
 
-	public static VoucherModel toVoucherModel(
-			CustomerRrDto customerReqDto,
-			int acctId,
-			int createdByUserId
-	)
-	{
-		VoucherModel voucherModel = new VoucherModel();
-		voucherModel.setDate(new Date(Util.stringToDate("1000-01-01", Util.Formats.DB_DATE).getTime()));
-		voucherModel.setVoucherType(VoucherType.OPENING_BALANCE);
-		voucherModel.setAcctId(acctId);
-		voucherModel.setCreatedByUserId(createdByUserId);
-		return voucherModel;
-	}
-
 	public static CustomerModel toCustomerModel(CustomerRrDto customerReqDto)
 	{
 		CustomerModel customerModel = new CustomerModel();
 		customerModel.setAddress(customerReqDto.getAddress() == null ? "" : customerReqDto.getAddress());
 		customerModel.setCity(customerReqDto.getCity() == null ? "" : customerReqDto.getCity());
 		customerModel.setStateId(customerReqDto.getStateId());
-		customerModel.setStateId(customerReqDto.getCountryId());
+		customerModel.setCountryId(customerReqDto.getCountryId());
 		customerModel.setPin(customerReqDto.getPin());
 		customerModel.setEmail(customerReqDto.getEmail() == null ? "" : customerReqDto.getEmail());
 		customerModel.setGstNo(customerReqDto.getGstNo() == null ? "" : customerReqDto.getGstNo());

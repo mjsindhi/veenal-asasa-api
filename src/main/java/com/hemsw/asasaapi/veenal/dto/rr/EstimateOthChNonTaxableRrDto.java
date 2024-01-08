@@ -1,17 +1,16 @@
-package com.hemsw.asasaapi.veenal.dto.req;
+package com.hemsw.asasaapi.veenal.dto.rr;
 
 import com.hemsw.asasaapi.veenal.enums.RateType;
 import java.math.BigDecimal;
 
-public class EstimateOthChTaxableReqDto
+public class EstimateOthChNonTaxableRrDto
 {
 
 	private int othChId;
 	private BigDecimal rate;
 	private int rateTypeId;
-	private Integer taxId;
 
-	public EstimateOthChTaxableReqDto()
+	public EstimateOthChNonTaxableRrDto()
 	{
 	}
 
@@ -43,16 +42,6 @@ public class EstimateOthChTaxableReqDto
 	public void setRateTypeId(int rateTypeId)
 	{
 		this.rateTypeId = rateTypeId;
-	}
-
-	public Integer getTaxId()
-	{
-		return taxId;
-	}
-
-	public void setTaxId(Integer taxId)
-	{
-		this.taxId = taxId;
 	}
 
 	public RateType getRateType()

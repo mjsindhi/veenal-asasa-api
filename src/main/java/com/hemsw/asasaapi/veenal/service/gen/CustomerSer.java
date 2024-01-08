@@ -16,6 +16,7 @@ import com.hemsw.asasaapi.veenal.dao.gen.TransporterDao;
 import com.hemsw.asasaapi.veenal.dao.gen.VoucherDao;
 import com.hemsw.asasaapi.veenal.dto.ldto.CustomerLdto;
 import com.hemsw.asasaapi.veenal.dto.res.CommonGetResDto;
+import com.hemsw.asasaapi.veenal.mapper.VoucherMapper;
 import jakarta.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
@@ -115,7 +116,7 @@ public class CustomerSer
 		AcctModel acctModel = CustomerMapper.toAcctModel(customerReqDto, userModel.getId());
 		acctDao.create(acctModel);
 
-		VoucherModel voucherModel = CustomerMapper.toVoucherModel(
+		VoucherModel voucherModel = VoucherMapper.toVoucherModel(
 				customerReqDto,
 				acctModel.getId(),
 				userModel.getId());

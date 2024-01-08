@@ -80,6 +80,29 @@ public class EstimateItemModel
 	{
 	}
 
+	public void set(EstimateItemModel estimateItemModel)
+	{
+		this.id = estimateItemModel.getId();
+		this.seqNo = estimateItemModel.getSeqNo();
+		this.estimateModel = estimateItemModel.getEstimateModel();
+		this.productId = estimateItemModel.getProductId();
+		this.desc = estimateItemModel.getDesc();
+		this.qty = estimateItemModel.getQty();
+		this.rate = estimateItemModel.getRate();
+		this.qxr = estimateItemModel.getQxr();
+		this.discRate = estimateItemModel.getDiscRate();
+		this.discRateTypeId = estimateItemModel.getDiscRateTypeId();
+		this.discA = estimateItemModel.getDiscA();
+		this.amtAfterDisc = estimateItemModel.getAmtAfterDisc();
+		this.taxableAmt = estimateItemModel.getTaxableAmt();
+		this.taxId = estimateItemModel.getTaxId();
+		this.taxRate = estimateItemModel.getTaxRate();
+		this.cgstA = estimateItemModel.getCgstA();
+		this.sgstA = estimateItemModel.getSgstA();
+		this.igstA = estimateItemModel.getIgstA();
+		this.amt = estimateItemModel.getAmt();
+	}
+
 	public int getId()
 	{
 		return id;

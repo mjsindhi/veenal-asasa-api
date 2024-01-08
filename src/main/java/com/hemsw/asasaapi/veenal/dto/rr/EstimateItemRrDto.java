@@ -1,9 +1,9 @@
-package com.hemsw.asasaapi.veenal.dto.req;
+package com.hemsw.asasaapi.veenal.dto.rr;
 
 import com.hemsw.asasaapi.veenal.enums.RateType;
 import java.math.BigDecimal;
 
-public class EstimateItemReqDto
+public class EstimateItemRrDto
 {
 
 	private int id;
@@ -14,7 +14,7 @@ public class EstimateItemReqDto
 	private BigDecimal discRate;
 	private Integer discRateTypeId;
 
-	public EstimateItemReqDto()
+	public EstimateItemRrDto()
 	{
 	}
 

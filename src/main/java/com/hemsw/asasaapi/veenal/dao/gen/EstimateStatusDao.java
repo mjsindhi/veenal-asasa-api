@@ -4,10 +4,13 @@ import com.hemsw.asasaapi.veenal.SqlHelper;
 import com.hemsw.asasaapi.veenal.TableName;
 import com.hemsw.asasaapi.veenal.helper.DaoHelper;
 import com.hemsw.asasaapi.veenal.model.gen.EstimateStatusModel;
+import com.hemsw.asasaapi.veenal.util.Util;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +29,18 @@ public class EstimateStatusDao
 	public void create(EstimateStatusModel vObj)
 	{
 		session.persist(vObj);
+	}
+
+	public boolean isIdExists(int id)
+	{
+		String sql = String.format("SELECT COUNT(id)>0 FROM {table} WHERE id = %s", id);
+		Map<String, String> map = new HashMap<>();
+		map.put("table", TableName.ESTIMATE_STATUS);
+		sql = Util.formatString(sql, map);
+		return (boolean) session
+				.createNativeQuery(sql, Boolean.TYPE)
+				.getSingleResult();
+
 	}
 
 	public EstimateStatusModel getByName(String name)
